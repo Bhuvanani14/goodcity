@@ -7,7 +7,7 @@ A comprehensive web application for Indian citizens to report and track civic is
 
 ### 🏙️ Core Features
 - **Issue Reporting**: Indian citizens can report various civic issues with photos and location data
-- **Real-time Tracking**: Track issue status from submission to resolution by municipal authorities
+- **Real-time Tracking**: Track issue status from submission to resolution by municipal authorities 
 - **Role-based Access**: Separate interfaces for citizens and municipal administrators
 - **AI Chatbot**: Interactive assistant for issue guidance and status queries with India-specific responses
 - **Priority System**: Color-coded priority levels (low, moderate, urgent) based on Indian municipal standards
