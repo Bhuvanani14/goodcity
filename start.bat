@@ -19,7 +19,7 @@ echo Demo Credentials:
 echo   User: user / user@123
 echo   Admin: admin / admin@123
 echo.
-echo Press Ctrl+C to stop the server
+echo Press Ctrl+C to stop the server 
 echo.
 
 npm start
