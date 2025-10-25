@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sanitation & Waste Management - Improve My City</title>
+    <style>
+        body {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0B0A2A 0%, #11114C 50%, #16186E 100%);
+            color: white;
+            min-height: 100%;
+        }
+
+        html {
+            height: 100%;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(11, 10, 42, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(34, 36, 179, 0.3);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #2224B3;
+            text-shadow: 0 0 10px rgba(34, 36, 179, 0.5);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: #2224B3;
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 80px;
+            padding: 2rem;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Header Section */
+        .page-header {
+            text-align: center;
+            padding: 2rem 0 3rem;
+            border-bottom: 1px solid rgba(34, 36, 179, 0.3);
+            margin-bottom: 2rem;
+        }
+
+        .page-header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(45deg, #2224B3, #1C1E91);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-header .category-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-item {
+            background: linear-gradient(135deg, rgba(28, 30, 145, 0.2), rgba(34, 36, 179, 0.1));
+            border: 1px solid rgba(34, 36, 179, 0.3);
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #2224B3;
+            display: block;
+        }
+
+        .stat-label {
+            opacity: 0.8;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Filter Section */
+        .filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-btn {
+            padding: 0.7rem 1.2rem;
+            border: 1px solid rgba(34, 36, 179, 0.5);
+            background: transparent;
+            color: white;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: linear-gradient(45deg, #2224B3, #1C1E91);
+            border-color: #2224B3;
+        }
+
+        /* Issues List */
+        .issues-container {
+            margin-bottom: 6rem;
+        }
+
+        .issue-card {
+            background: linear-gradient(135deg, rgba(17, 17, 76, 0.3), rgba(22, 24, 110, 0.2));
+            border: 1px solid rgba(34, 36, 179, 0.4);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .issue-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(34, 36, 179, 0.3);
+        }
+
+        .issue-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .issue-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #2224B3;
+            margin: 0 0 0.5rem 0;
+        }
+
+        .priority-badge {
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .priority-low {
+            background: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+
+        .priority-moderate {
+            background: rgba(251, 191, 36, 0.2);
+            color: #fbbf24;
+            border: 1px solid rgba(251, 191, 36, 0.3);
+        }
+
+        .priority-urgent {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .issue-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.9rem;
+            opacity: 0.7;
+            margin-bottom: 1rem;
+        }
+
+        .issue-description {
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            opacity: 0.9;
+        }
+
+        .issue-location {
+            background: rgba(34, 36, 179, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        .issue-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .upvote-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(45deg, rgba(34, 36, 179, 0.3), rgba(28, 30, 145, 0.2));
+            border: 1px solid rgba(34, 36, 179, 0.5);
+            color: white;
+            padding: 0.7rem 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .upvote-btn:hover {
+            background: linear-gradient(45deg, #2224B3, #1C1E91);
+            transform: translateY(-1px);
+        }
+
+        .upvote-btn.voted {
+            background: linear-gradient(45deg, #2224B3, #1C1E91);
+            box-shadow: 0 0 15px rgba(34, 36, 179, 0.4);
+        }
+
+        .vote-count {
+            font-weight: bold;
+            color: #2224B3;
+        }
+
+        /* Floating Action Button */
+        .fab {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #2224B3, #1C1E91);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(34, 36, 179, 0.4);
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+
+        .fab:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(34, 36, 179, 0.6);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(11, 10, 42, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            overflow-y: auto;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, rgba(17, 17, 76, 0.9), rgba(22, 24, 110, 0.8));
+            border: 2px solid rgba(34, 36, 179, 0.5);
+            border-radius: 20px;
+            padding: 2rem;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            color: #2224B3;
+            margin: 0;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: background 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background: rgba(239, 68, 68, 0.2);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #2224B3;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid rgba(34, 36, 179, 0.3);
+            border-radius: 8px;
+            background: rgba(11, 10, 42, 0.5);
+            color: white;
+            font-size: 1rem;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #2224B3;
+            box-shadow: 0 0 10px rgba(34, 36, 179, 0.3);
+        }
+
+        .file-upload {
+            border: 2px dashed rgba(34, 36, 179, 0.5);
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .file-upload:hover {
+            border-color: #2224B3;
+            background: rgba(34, 36, 179, 0.1);
+        }
+
+        .file-upload input {
+            display: none;
+        }
+
+        .submit-btn {
+            background: linear-gradient(45deg, #2224B3, #1C1E91);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(34, 36, 179, 0.4);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .stats-bar {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .filters {
+                justify-content: center;
+            }
+
+            .issue-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .issue-actions {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: stretch;
+            }
+
+            .fab {
+                bottom: 1rem;
+                right: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <div class="logo">Improve My City</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#categories">Categories</a></li>
+                <li><a href="#chat">AI Assistant</a></li>
+                <li><a href="#contributors">Contributors</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <header class="page-header">
+            <span class="category-icon">🗑️</span>
+            <h1>Sanitation & Waste Management</h1>
+            <p>Address cleanliness concerns, waste disposal issues, and promote sustainable waste management practices to keep our community clean and healthy.</p>
+        </header>
+
+        <section class="stats-bar">
+            <div class="stat-item">
+                <span class="stat-number">38</span>
+                <div class="stat-label">Total Issues</div>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">8</span>
+                <div class="stat-label">Urgent Priority</div>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">19</span>
+                <div class="stat-label">In Progress</div>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">15</span>
+                <div class="stat-label">Resolved</div>
+            </div>
+        </section>
+
+        <section class="filters">
+            <button class="filter-btn active">All Issues</button>
+            <button class="filter-btn">Urgent</button>
+            <button class="filter-btn">Moderate</button>
+            <button class="filter-btn">Low Priority</button>
+            <button class="filter-btn">Recent</button>
+            <button class="filter-btn">Most Voted</button>
+        </section>
+
+        <section class="issues-container">
+            <article class="issue-card">
+                <div class="issue-header">
+                    <div>
+                        <h3 class="issue-title">Overflowing Garbage Bins at Central Park</h3>
+                        <div class="issue-meta">
+                            <span>📅 Reported 2 days ago</span>
+                            <span>👤 By Lisa T.</span>
+                        </div>
+                    </div>
+                    <span class="priority-badge priority-urgent">Urgent</span>
+                </div>
+                <p class="issue-description">
+                    The garbage bins near the playground at Central Park have been overflowing for several days. Trash is scattered around the area, attracting pests and creating an unsanitary environment for families with children.
+                </p>
+                <div class="issue-location">📍 Central Park Playground Area</div>
+                <div class="issue-actions">
+                    <button class="upvote-btn" onclick="toggleUpvote(this)">
+                        <span>👍</span>
+                        <span>Upvote</span>
+                        <span class="vote-count">(36)</span>
+                    </button>
+                    <span style="opacity: 0.7;">Status: Cleanup Scheduled</span>
+                </div>
+            </article>
+
+            <article class="issue-card">
+                <div class="issue-header">
+                    <div>
+                        <h3 class="issue-title">Illegal Dumping Behind Shopping Center</h3>
+                        <div class="issue-meta">
+                            <span>📅 Reported 4 days ago</span>
+                            <span>👤 By Robert K.</span>
+                        </div>
+                    </div>
+                    <span class="priority-badge priority-urgent">Urgent</span>
+                </div>
+                <p class="issue-description">
+                    Large amounts of construction debris, old furniture, and household waste have been illegally dumped behind the Westside Shopping Center. The pile is growing daily and poses environmental and health risks.
+                </p>
+                <div class="issue-location">📍 Westside Shopping Center, Rear Parking Area</div>
+                <div class="issue-actions">
+                    <button class="upvote-btn" onclick="toggleUpvote(this)">
+                        <span>👍</span>
+                        <span>Upvote</span>
+                        <span class="vote-count">(28)</span>
+                    </button>
+                    <span style="opacity: 0.7;">Status: Investigation in Progress</span>
+                </div>
+            </article>
+
+            <article class="issue-card">
+                <div class="issue-header">
+                    <div>
+                        <h3 class="issue-title">Missed Recycling Collection on Maple Street</h3>
+                        <div class="issue-meta">
+                            <span>📅 Reported 1 week ago</span>
+                            <span>👤 By Amanda P.</span>
+                        </div>
+                    </div>
+                    <span class="priority-badge priority-moderate">Moderate</span>
+                </div>
+                <p class="issue-description">
+                    Recycling collection has been missed for three consecutive weeks on Maple Street between 1st and 3rd Avenue. Residents' recycling bins are overflowing and some materials are blowing around the neighborhood.
+                </p>
+                <div class="issue-location">📍 Maple Street, 1st-3rd Avenue</div>
+                <div class="issue-actions">
+                    <button class="upvote-btn" onclick="toggleUpvote(this)">
+                        <span>👍</span>
+                        <span>Upvote</span>
+                        <span class="vote-count">(22)</span>
+                    </button>
+                    <span style="opacity: 0.7;">Status: Rescheduled Collection</span>
+                </div>
+            </article>
+
+            <article class="issue-card">
+                <div class="issue-header">
+                    <div>
+                        <h3 class="issue-title">Broken Public Restroom at Riverside Park</h3>
+                        <div class="issue-meta">
+                            <span>📅 Reported 6 days ago</span>
+                            <span>👤 By Carlos M.</span>
+                        </div>
+                    </div>
+                    <span class="priority-badge priority-moderate">Moderate</span>
+                </div>
+                <p class="issue-description">
+                    The public restroom facilities at Riverside Park are in poor condition with broken fixtures, no running water, and unsanitary conditions. This affects park visitors, especially families with children.
+                </p>
+                <div class="issue-location">📍 Riverside Park, Main Pavilion</div>
+                <div class="issue-actions">
+                    <button class="upvote-btn" onclick="toggleUpvote(this)">
+                        <span>👍</span>
+                        <span>Upvote</span>
+                        <span class="vote-count">(19)</span>
+                    </button>
+                    <span style="opacity: 0.7;">Status: Repair Scheduled</span>
+                </div>
+            </article>
+
+            <article class="issue-card">
+                <div class="issue-header">
+                    <div>
+                        <h3 class="issue-title">Dog Waste Stations Need Refilling</h3>
+                        <div class="issue-meta">
+                            <span>📅 Reported 3 days ago</span>
+                            <span>👤 By Michelle D.</span>
+                        </div>
+                    </div>
+                    <span class="priority-badge priority-low">Low</span>
+                </div>
+                <p class="issue-description">
+                    Several dog waste bag dispensers throughout the downtown area are empty and haven't been refilled in weeks. This leads to pet waste not being cleaned up properly, affecting sidewalk cleanliness.
+                </p>
+                <div class="issue-location">📍 Downtown Area, Multiple Locations</div>
+                <div class="issue-actions">
+                    <button class="upvote-btn" onclick="toggleUpvote(this)">
+                        <span>👍</span>
+                        <span>Upvote</span>
+                        <span class="vote-count">(14)</span>
+                    </button>
+                    <span style="opacity: 0.7;">Status: Maintenance Scheduled</span>
+                </div>
+            </article>
+
+            <article class="issue-card">
+                <div class="issue-header">
+                    <div>
+                        <h3 class="issue-title">Graffiti on Bus Stop Shelters</h3>
+                        <div class="issue-meta">
+                            <span>📅 Reported 5 days ago</span>
+                            <span>👤 By James W.</span>
+                        </div>
+                    </div>
+                    <span class="priority-badge priority-low">Low</span>
+                </div>
+                <p class="issue-description">
+                    Multiple bus stop shelters along the main transit route have been vandalized with graffiti. While not urgent, cleaning these would improve the appearance of our public transportation areas.
+                </p>
+                <div class="issue-location">📍 Main Transit Route, Various Stops</div>
+                <div class="issue-actions">
+                    <button class="upvote-btn" onclick="toggleUpvote(this)">
+                        <span>👍</span>
+                        <span>Upvote</span>
+                        <span class="vote-count">(11)</span>
+                    </button>
+                    <span style="opacity: 0.7;">Status: Cleaning Planned</span>
+                </div>
+            </article>
+        </section>
+    </main>
+
+    <!-- Floating Action Button -->
+    <button class="fab" onclick="openModal()" title="Report New Issue">
+        ➕
+    </button>
+
+    <!-- Modal for New Complaint -->
+    <div class="modal" id="complaintModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Report New Sanitation Issue</h2>
+                <button class="close-btn" onclick="closeModal()">✕</button>
+            </div>
+            <form id="complaintForm">
+                <div class="form-group">
+                    <label for="issueTitle">Issue Title *</label>
+                    <input type="text" id="issueTitle" name="issueTitle" placeholder="Brief description of the issue" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="issueDescription">Detailed Description *</label>
+                    <textarea id="issueDescription" name="issueDescription" rows="4" placeholder="Provide a detailed description of the sanitation or waste management issue..." required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="issueLocation">Location *</label>
+                    <input type="text" id="issueLocation" name="issueLocation" placeholder="Street address or intersection" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="issuePriority">Priority Level</label>
+                    <select id="issuePriority" name="issuePriority">
+                        <option value="low">Low - Minor cleanliness issue</option>
+                        <option value="moderate">Moderate - Affects community hygiene</option>
+                        <option value="urgent">Urgent - Health hazard, needs immediate attention</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="issuePhotos">Upload Photos (Optional)</label>
+                    <div class="file-upload" onclick="document.getElementById('issuePhotos').click()">
+                        <input type="file" id="issuePhotos" name="issuePhotos" multiple accept="image/*">
+                        <div>📷 Click to upload photos of the issue</div>
+                        <small style="opacity: 0.7;">Supports multiple images (JPG, PNG)</small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="reporterName">Your Name (Optional)</label>
+                    <input type="text" id="reporterName" name="reporterName" placeholder="Your name for follow-up">
+                </div>
+
+                <div class="form-group">
+                    <label for="reporterContact">Contact Information (Optional)</label>
+                    <input type="email" id="reporterContact" name="reporterContact" placeholder="Email for updates on this issue">
+                </div>
+
+                <button type="submit" class="submit-btn">Submit Issue Report</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Modal functionality
+        function openModal() {
+            document.getElementById('complaintModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('complaintModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('complaintModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Upvote functionality
+        function toggleUpvote(button) {
+            const voteCountSpan = button.querySelector('.vote-count');
+            const currentCount = parseInt(voteCountSpan.textContent.match(/\d+/)[0]);
+            
+            if (button.classList.contains('voted')) {
+                button.classList.remove('voted');
+                voteCountSpan.textContent = `(${currentCount - 1})`;
+                button.querySelector('span:nth-child(2)').textContent = 'Upvote';
+            } else {
+                button.classList.add('voted');
+                voteCountSpan.textContent = `(${currentCount + 1})`;
+                button.querySelector('span:nth-child(2)').textContent = 'Voted';
+            }
+        }
+
+        // Filter functionality
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Here you would implement actual filtering logic
+                console.log('Filtering by:', this.textContent);
+            });
+        });
+
+        // Form submission
+        document.getElementById('complaintForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const issueData = {
+                title: formData.get('issueTitle'),
+                description: formData.get('issueDescription'),
+                location: formData.get('issueLocation'),
+                priority: formData.get('issuePriority'),
+                reporter: formData.get('reporterName'),
+                contact: formData.get('reporterContact')
+            };
+            
+            // Simulate form submission
+            console.log('Submitting issue:', issueData);
+            
+            // Show success message (in a real app, this would be handled by the backend)
+            alert('Thank you! Your issue has been reported successfully. You will receive updates via email if you provided contact information.');
+            
+            // Reset form and close modal
+            this.reset();
+            closeModal();
+        });
+
+        // File upload preview
+        document.getElementById('issuePhotos').addEventListener('change', function(e) {
+            const fileUpload = document.querySelector('.file-upload');
+            const files = e.target.files;
+            
+            if (files.length > 0) {
+                fileUpload.innerHTML = `
+                    <div>📷 ${files.length} photo(s) selected</div>
+                    <small style="opacity: 0.7;">Click to change photos</small>
+                `;
+            }
+        });
+
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'993c84c607329197',t:'MTc2MTM0MDgzMi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
