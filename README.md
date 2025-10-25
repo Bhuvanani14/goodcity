@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Good City - Civic Issue Reporting & Tracking Application
 
 A comprehensive web application for Indian citizens to report and track civic issues in their cities, with role-based access for both citizens and municipal administrators.
@@ -192,3 +193,7 @@ For support or questions, please contact the development team or create an issue
 ---
 
 **Note**: This is a demo application with dummy credentials. In a production environment, implement proper user registration, password policies, and additional security measures.
+=======
+# goodcity
+Masai Hackathon
+>>>>>>> 05b26482d649b493d6fc6fc7d618148baa916211
