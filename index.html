@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Good City</title>
+    <style>
+        body {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #cbd5e1 100%);
+            color: #1e293b;
+            min-height: 100%;
+        }
+
+        html {
+            height: 100%;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(226, 232, 240, 0.5);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #3b82f6;
+            text-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links a {
+            color: #475569;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: #3b82f6;
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 80px;
+            padding: 2rem;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 3rem 0;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #3b82f6, #1d4ed8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 3rem;
+            opacity: 0.8;
+            color: #64748b;
+        }
+
+        /* Hero Statistics */
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-stats .stat-item {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(248, 250, 252, 0.8));
+            border: 1px solid rgba(226, 232, 240, 0.5);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .hero-stats .stat-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.15);
+        }
+
+        .hero-stats .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #3b82f6;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-stats .stat-label {
+            opacity: 0.8;
+            font-size: 0.9rem;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        /* Category Grid */
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto 4rem;
+            padding: 0 1rem;
+        }
+
+        .category-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(248, 250, 252, 0.6));
+            border: 1px solid rgba(226, 232, 240, 0.6);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.2);
+            border-color: #3b82f6;
+        }
+
+        .category-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .category-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: #3b82f6;
+        }
+
+        .category-card p {
+            opacity: 0.7;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            color: #64748b;
+        }
+
+        /* Category Statistics */
+        .category-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding: 0.5rem 0;
+        }
+
+        .issue-count {
+            font-size: 0.9rem;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        .priority-badge {
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .priority-low {
+            background: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+
+        .priority-moderate {
+            background: rgba(251, 191, 36, 0.2);
+            color: #fbbf24;
+            border: 1px solid rgba(251, 191, 36, 0.3);
+        }
+
+        .priority-urgent {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .raise-concern-btn {
+            background: linear-gradient(45deg, #3b82f6, #1d4ed8);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-size: 0.95rem;
+        }
+
+        .raise-concern-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
+            background: linear-gradient(45deg, #1d4ed8, #1e40af);
+        }
+
+        /* AI Chatbot Section */
+        .chatbot-section {
+            max-width: 1200px;
+            margin: 0 auto 4rem;
+            padding: 0 1rem;
+        }
+
+        .chatbot-container {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(248, 250, 252, 0.8));
+            border: 2px solid rgba(59, 130, 246, 0.3);
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .chatbot-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(29, 78, 216, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 40% 60%, rgba(59, 130, 246, 0.03) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .chatbot-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .chatbot-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: #3b82f6;
+        }
+
+        .ai-stars {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .star {
+            color: #3b82f6;
+            font-size: 1.5rem;
+            animation: twinkle 2s infinite alternate;
+        }
+
+        .star:nth-child(2) { animation-delay: 0.5s; }
+        .star:nth-child(3) { animation-delay: 1s; }
+        .star:nth-child(4) { animation-delay: 1.5s; }
+
+        @keyframes twinkle {
+            0% { opacity: 0.5; transform: scale(1); }
+            100% { opacity: 1; transform: scale(1.2); }
+        }
+
+        .chat-input {
+            width: 100%;
+            padding: 1.5rem;
+            border: 2px solid rgba(226, 232, 240, 0.5);
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.8);
+            color: #1e293b;
+            font-size: 1.1rem;
+            resize: vertical;
+            min-height: 120px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .chat-input::placeholder {
+            color: rgba(100, 116, 139, 0.7);
+        }
+
+        .chat-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
+        }
+
+        /* Chatbot Response Styles */
+        .chatbot-response {
+            margin-top: 1rem;
+            animation: slideInUp 0.5s ease-out;
+        }
+
+        .response-content {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(29, 78, 216, 0.05));
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 15px;
+            padding: 1rem;
+        }
+
+        .response-avatar {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, #3b82f6, #1d4ed8);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .response-text {
+            color: #1e293b;
+            line-height: 1.5;
+            font-size: 0.95rem;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Notification Styles */
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            z-index: 3000;
+            max-width: 400px;
+            animation: slideInRight 0.5s ease-out;
+        }
+
+        .notification-content {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 250, 252, 0.9));
+            border: 1px solid rgba(226, 232, 240, 0.5);
+            border-radius: 12px;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(10px);
+        }
+
+        .notification-success .notification-content {
+            border-left: 4px solid #22c55e;
+        }
+
+        .notification-error .notification-content {
+            border-left: 4px solid #ef4444;
+        }
+
+        .notification-info .notification-content {
+            border-left: 4px solid #3b82f6;
+        }
+
+        .notification-icon {
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .notification-message {
+            color: #1e293b;
+            font-weight: 500;
+            flex: 1;
+        }
+
+        .notification-close {
+            background: none;
+            border: none;
+            color: #64748b;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0.25rem;
+            border-radius: 4px;
+            transition: background 0.2s ease;
+        }
+
+        .notification-close:hover {
+            background: rgba(100, 116, 139, 0.1);
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Contributors Section */
+        .contributors {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(248, 250, 252, 0.8));
+            padding: 4rem 2rem;
+            margin-top: 4rem;
+            border-top: 1px solid rgba(226, 232, 240, 0.5);
+        }
+
+        .contributors h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #3b82f6;
+        }
+
+        .contributor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .contributor-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(248, 250, 252, 0.6));
+            border: 1px solid rgba(226, 232, 240, 0.5);
+            border-radius: 15px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .contributor-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.2);
+        }
+
+        .contributor-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .contributor-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #3b82f6, #1d4ed8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-right: 1rem;
+        }
+
+        .contributor-info h3 {
+            margin: 0 0 0.5rem 0;
+            color: #3b82f6;
+        }
+
+        .contributor-location {
+            opacity: 0.7;
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+
+        .contributor-story {
+            margin: 1rem 0;
+            line-height: 1.6;
+            opacity: 0.8;
+            color: #475569;
+        }
+
+        .contributor-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .btn {
+            padding: 0.7rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #3b82f6, #1d4ed8);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #3b82f6;
+            border: 1px solid #3b82f6;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
+        }
+
+        /* User Info Styles */
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: #3b82f6;
+            font-weight: 500;
+        }
+
+        .logout-btn {
+            background: linear-gradient(45deg, #ef4444, #dc2626);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .categories {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .contributor-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <div class="logo">🏙️ Good City</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#categories">Categories</a></li>
+                <li><a href="#chat">AI Assistant</a></li>
+                <li><a href="#contributors">Contributors</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="admin_dashboard.html" style="color: #ef4444; font-weight: 600;">Admin</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero" id="home">
+            <h1>Good City</h1>
+            <p>Empowering Indian citizens to create positive change in their cities through collaboration and innovation</p>
+            
+            <!-- Real-time Statistics -->
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <div class="stat-number" id="totalIssues">247</div>
+                    <div class="stat-label">Issues Reported</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="resolvedIssues">189</div>
+                    <div class="stat-label">Issues Resolved</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="activeUsers">1,234</div>
+                    <div class="stat-label">Active Citizens</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="responseTime">2.3</div>
+                    <div class="stat-label">Avg Response (Days)</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="categories" id="categories">
+            <div class="category-card" data-category="infrastructure">
+                <span class="category-icon">🛣️</span>
+                <h3>Infrastructure & Road Safety</h3>
+                <p>Report road conditions, traffic issues, and infrastructure problems to help build safer streets for everyone.</p>
+                <div class="category-stats">
+                    <span class="issue-count">47 issues</span>
+                    <span class="priority-badge priority-urgent">12 urgent</span>
+                </div>
+                <button class="raise-concern-btn" onclick="navigateToCategory('Infra.html')">Raise a Concern</button>
+            </div>
+
+            <div class="category-card" data-category="sanitation">
+                <span class="category-icon">🗑️</span>
+                <h3>Sanitation & Waste Management</h3>
+                <p>Address cleanliness concerns, waste disposal issues, and promote sustainable waste management practices.</p>
+                <div class="category-stats">
+                    <span class="issue-count">38 issues</span>
+                    <span class="priority-badge priority-urgent">8 urgent</span>
+                </div>
+                <button class="raise-concern-btn" onclick="navigateToCategory('sanitation.html')">Raise a Concern</button>
+            </div>
+
+            <div class="category-card" data-category="utilities">
+                <span class="category-icon">⚡</span>
+                <h3>Public Utilities</h3>
+                <p>Report issues with water supply, electricity, gas, and other essential public utility services.</p>
+                <div class="category-stats">
+                    <span class="issue-count">42 issues</span>
+                    <span class="priority-badge priority-urgent">9 urgent</span>
+                </div>
+                <button class="raise-concern-btn" onclick="navigateToCategory('Public_Utilities.html')">Raise a Concern</button>
+            </div>
+
+            <div class="category-card" data-category="environment">
+                <span class="category-icon">🌳</span>
+                <h3>Environment & Public Spaces</h3>
+                <p>Protect green spaces, improve air quality, and enhance public parks and recreational areas.</p>
+                <div class="category-stats">
+                    <span class="issue-count">35 issues</span>
+                    <span class="priority-badge priority-urgent">7 urgent</span>
+                </div>
+                <button class="raise-concern-btn" onclick="navigateToCategory('environment_&_public_spaces.html')">Raise a Concern</button>
+            </div>
+
+            <div class="category-card" data-category="civic">
+                <span class="category-icon">🏛️</span>
+                <h3>Civic Amenities & Services</h3>
+                <p>Improve public facilities, government services, and community amenities for better quality of life.</p>
+                <div class="category-stats">
+                    <span class="issue-count">29 issues</span>
+                    <span class="priority-badge priority-urgent">6 urgent</span>
+                </div>
+                <button class="raise-concern-btn" onclick="navigateToCategory('Civic_Amenities_&_Services.html')">Raise a Concern</button>
+            </div>
+
+            <div class="category-card" data-category="safety">
+                <span class="category-icon">🚨</span>
+                <h3>Safety & Law Enforcement</h3>
+                <p>Report safety concerns, security issues, and work with law enforcement to create safer neighborhoods.</p>
+                <div class="category-stats">
+                    <span class="issue-count">42 issues</span>
+                    <span class="priority-badge priority-urgent">9 urgent</span>
+                </div>
+                <button class="raise-concern-btn" onclick="navigateToCategory('Safety_&_Law_Enforcement.html')">Raise a Concern</button>
+            </div>
+        </section>
+
+        <section class="chatbot-section" id="chat">
+            <div class="chatbot-container">
+                <div class="chatbot-header">
+                    <h2>AI City Assistant</h2>
+                    <div class="ai-stars">
+                        <span class="star">⭐</span>
+                        <span class="star">✨</span>
+                        <span class="star">⭐</span>
+                        <span class="star">✨</span>
+                    </div>
+                    <p>Describe your city concern and get instant guidance on how to address it</p>
+                </div>
+                <textarea 
+                    class="chat-input" 
+                    placeholder="Tell me about the issue you'd like to address in your city... For example: 'There's a pothole on Main Street that's been there for weeks' or 'The park near my house needs better lighting for safety'"
+                    rows="4"
+                ></textarea>
+            </div>
+        </section>
+    </main>
+
+    <section class="contributors" id="contributors">
+        <h2>Community Heroes</h2>
+        <div class="contributor-grid">
+            <div class="contributor-card">
+                <div class="contributor-header">
+                    <div class="contributor-avatar">🌊</div>
+                    <div class="contributor-info">
+                        <h3>Vikram NGO</h3>
+                        <div class="contributor-location">Based in Hyderabad</div>
+                    </div>
+                </div>
+                <div class="contributor-story">
+                    Successfully cleaned and restored the contaminated Hussain Sagar Lake, removing tons of waste and implementing sustainable maintenance practices. Their dedicated team of 50+ volunteers worked tirelessly for 8 months to transform this vital water body.
+                </div>
+                <div class="contributor-actions">
+                    <a href="#" class="btn btn-primary">Watch Their Story</a>
+                    <a href="#" class="btn btn-secondary">Support Mission</a>
+                </div>
+            </div>
+
+            <div class="contributor-card">
+                <div class="contributor-header">
+                    <div class="contributor-avatar">🌱</div>
+                    <div class="contributor-info">
+                        <h3>Green Mumbai Initiative</h3>
+                        <div class="contributor-location">Based in Mumbai</div>
+                    </div>
+                </div>
+                <div class="contributor-story">
+                    Planted over 10,000 trees across Mumbai's urban areas and created 15 community gardens. Their innovative vertical gardening solutions have transformed concrete spaces into green oases, improving air quality for thousands of residents.
+                </div>
+                <div class="contributor-actions">
+                    <a href="#" class="btn btn-primary">Watch Their Story</a>
+                    <a href="#" class="btn btn-secondary">Support Mission</a>
+                </div>
+            </div>
+
+            <div class="contributor-card">
+                <div class="contributor-header">
+                    <div class="contributor-avatar">🚸</div>
+                    <div class="contributor-info">
+                        <h3>Safe Streets Bangalore</h3>
+                        <div class="contributor-location">Based in Bangalore</div>
+                    </div>
+                </div>
+                <div class="contributor-story">
+                    Installed 200+ speed breakers and safety signs near schools, reducing traffic accidents by 60% in their target areas. They also organized road safety awareness programs reaching over 5,000 students and parents.
+                </div>
+                <div class="contributor-actions">
+                    <a href="#" class="btn btn-primary">Watch Their Story</a>
+                    <a href="#" class="btn btn-secondary">Support Mission</a>
+                </div>
+            </div>
+
+            <div class="contributor-card">
+                <div class="contributor-header">
+                    <div class="contributor-avatar">💡</div>
+                    <div class="contributor-info">
+                        <h3>Delhi Solar Collective</h3>
+                        <div class="contributor-location">Based in Delhi</div>
+                    </div>
+                </div>
+                <div class="contributor-story">
+                    Installed solar-powered street lights in 25 underserved neighborhoods, providing safe passage for night commuters. Their community-funded approach has become a model for sustainable urban lighting solutions.
+                </div>
+                <div class="contributor-actions">
+                    <a href="#" class="btn btn-primary">Watch Their Story</a>
+                    <a href="#" class="btn btn-secondary">Support Mission</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Dynamic Statistics Animation
+        function animateCounter(elementId, targetValue, duration = 2000) {
+            const element = document.getElementById(elementId);
+            const startValue = 0;
+            const increment = targetValue / (duration / 16);
+            let currentValue = startValue;
+            
+            const timer = setInterval(() => {
+                currentValue += increment;
+                if (currentValue >= targetValue) {
+                    currentValue = targetValue;
+                    clearInterval(timer);
+                }
+                
+                if (elementId === 'responseTime') {
+                    element.textContent = currentValue.toFixed(1);
+                } else {
+                    element.textContent = Math.floor(currentValue).toLocaleString();
+                }
+            }, 16);
+        }
+
+        // Initialize counters when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate statistics
+            setTimeout(() => {
+                animateCounter('totalIssues', 247);
+                animateCounter('resolvedIssues', 189);
+                animateCounter('activeUsers', 1234);
+                animateCounter('responseTime', 2.3);
+            }, 500);
+
+            // Add real-time updates simulation
+            setInterval(() => {
+                const totalIssues = document.getElementById('totalIssues');
+                const resolvedIssues = document.getElementById('resolvedIssues');
+                
+                // Simulate new issues being reported
+                if (Math.random() < 0.1) {
+                    const currentTotal = parseInt(totalIssues.textContent.replace(/,/g, ''));
+                    totalIssues.textContent = (currentTotal + 1).toLocaleString();
+                }
+                
+                // Simulate issues being resolved
+                if (Math.random() < 0.15) {
+                    const currentResolved = parseInt(resolvedIssues.textContent.replace(/,/g, ''));
+                    const currentTotal = parseInt(totalIssues.textContent.replace(/,/g, ''));
+                    if (currentResolved < currentTotal) {
+                        resolvedIssues.textContent = (currentResolved + 1).toLocaleString();
+                    }
+                }
+            }, 10000); // Update every 10 seconds
+        });
+
+        // Navigation function for category pages
+        function navigateToCategory(pageName) {
+            window.location.href = pageName;
+        }
+
+        // Enhanced AI Chatbot functionality
+        const chatInput = document.querySelector('.chat-input');
+        const chatbotResponses = {
+            'pothole': 'I can help you report a pothole! In India, potholes are a major concern during monsoon season. Please provide the exact location (street name, landmark) and describe the size. You can also upload photos to help municipal authorities assess the issue quickly.',
+            'garbage': 'For waste management issues in Indian cities, I\'ll guide you through reporting overflowing bins, illegal dumping, or missed collections. Please specify the location and type of waste issue. Many Indian cities are implementing Swachh Bharat initiatives.',
+            'streetlight': 'Street lighting problems are crucial for safety in Indian cities. Please describe which lights are out, their location (near which landmark), and how long they\'ve been non-functional. This helps municipal corporations prioritize repairs.',
+            'water': 'Water supply issues are common in many Indian cities. Please specify if it\'s low pressure, no water, or water quality concerns, along with your area/colony name. This helps local water boards address the issue.',
+            'safety': 'Safety concerns are our priority. For emergencies in India, call 100 (police), 101 (fire), or 102 (ambulance). For non-emergency safety issues, please describe the specific concern and location.',
+            'park': 'Park and public space issues help improve our community. Please describe the specific problem - whether it\'s maintenance, accessibility, or safety related. Many Indian cities are developing smart parks.',
+            'monsoon': 'Monsoon-related issues are common in India. Please report waterlogging, drainage problems, or flood-prone areas. This helps municipal authorities prepare better for the rainy season.',
+            'traffic': 'Traffic issues in Indian cities need attention. Please report signal problems, congestion points, or road safety concerns. This helps traffic police and municipal authorities improve flow.',
+            'electricity': 'Power issues are important for daily life. Please report outages, exposed wires, or transformer problems with your area details. This helps electricity boards prioritize repairs.',
+            'sewage': 'Sewage and drainage issues affect public health. Please report blocked drains, overflowing sewage, or drainage problems with location details. This helps municipal corporations maintain sanitation.'
+        };
+
+        chatInput.addEventListener('input', function() {
+            const input = this.value.toLowerCase();
+            let response = '';
+            
+            for (const [keyword, reply] of Object.entries(chatbotResponses)) {
+                if (input.includes(keyword)) {
+                    response = reply;
+                    break;
+                }
+            }
+            
+            if (response && !this.dataset.responded) {
+                this.dataset.responded = 'true';
+                setTimeout(() => {
+                    showChatbotResponse(response);
+                }, 1000);
+            }
+        });
+
+        function showChatbotResponse(response) {
+            const chatbotContainer = document.querySelector('.chatbot-container');
+            const responseDiv = document.createElement('div');
+            responseDiv.className = 'chatbot-response';
+            responseDiv.innerHTML = `
+                <div class="response-content">
+                    <div class="response-avatar">🤖</div>
+                    <div class="response-text">${response}</div>
+                </div>
+            `;
+            
+            chatbotContainer.appendChild(responseDiv);
+            
+            // Scroll to response
+            responseDiv.scrollIntoView({ behavior: 'smooth' });
+            
+            // Remove response after 10 seconds
+            setTimeout(() => {
+                responseDiv.remove();
+                chatInput.dataset.responded = '';
+            }, 10000);
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Category card interactions
+        document.querySelectorAll('.category-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                // Only trigger if not clicking the button
+                if (!e.target.classList.contains('raise-concern-btn')) {
+                    const title = this.querySelector('h3').textContent;
+                    const chatInput = document.querySelector('.chat-input');
+                    chatInput.value = `I'd like to report an issue related to: ${title}. `;
+                    chatInput.focus();
+                    
+                    // Scroll to chat section
+                    document.querySelector('#chat').scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
+                }
+            });
+        });
+
+        // Raise concern button interactions
+        document.querySelectorAll('.raise-concern-btn').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.stopPropagation(); // Prevent card click
+                const title = this.parentElement.querySelector('h3').textContent;
+                const chatInput = document.querySelector('.chat-input');
+                chatInput.value = `I need to raise a concern about ${title}: `;
+                chatInput.focus();
+                
+                // Scroll to chat section
+                document.querySelector('#chat').scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+            });
+        });
+
+        // Chat input enhancement
+        chatInput.addEventListener('focus', function() {
+            this.parentElement.style.transform = 'scale(1.02)';
+        });
+
+        chatInput.addEventListener('blur', function() {
+            this.parentElement.style.transform = 'scale(1)';
+        });
+
+        // Add typing effect to placeholder
+        let placeholderTexts = [
+            "Tell me about civic issues in your Indian city...",
+            "Describe problems you've noticed in your neighborhood...",
+            "What would you like to improve in your Indian city?",
+            "Share your city concern and get instant guidance...",
+            "Report infrastructure, safety, or environmental issues in India...",
+            "Get help with civic amenities and public services in your city..."
+        ];
+        
+        let currentPlaceholder = 0;
+        setInterval(() => {
+            currentPlaceholder = (currentPlaceholder + 1) % placeholderTexts.length;
+            chatInput.placeholder = placeholderTexts[currentPlaceholder];
+        }, 4000);
+
+        // Add notification system
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.innerHTML = `
+                <div class="notification-content">
+                    <span class="notification-icon">${type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️'}</span>
+                    <span class="notification-message">${message}</span>
+                    <button class="notification-close" onclick="this.parentElement.parentElement.remove()">×</button>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.remove();
+                }
+            }, 5000);
+        }
+
+        // Check authentication status
+        window.addEventListener('load', function() {
+            checkAuthentication();
+        });
+
+        async function checkAuthentication() {
+            const userSession = localStorage.getItem('userSession');
+            if (!userSession) {
+                // Redirect to login if no session
+                window.location.href = 'login.html';
+                return;
+            }
+
+            try {
+                const session = JSON.parse(userSession);
+                const loginTime = new Date(session.loginTime);
+                const now = new Date();
+                const hoursDiff = (now - loginTime) / (1000 * 60 * 60);
+                
+                // If session expired, redirect to login
+                if (hoursDiff >= 24) {
+                    localStorage.removeItem('userSession');
+                    window.location.href = 'login.html';
+                    return;
+                }
+
+                // Update UI based on user role
+                updateUIForUser(session);
+                
+                // Verify token with server
+                const response = await fetch('/api/auth/me', {
+                    headers: {
+                        'Authorization': `Bearer ${session.token}`
+                    }
+                });
+
+                if (!response.ok) {
+                    localStorage.removeItem('userSession');
+                    window.location.href = 'login.html';
+                    return;
+                }
+
+            } catch (error) {
+                console.error('Auth check failed:', error);
+                localStorage.removeItem('userSession');
+                window.location.href = 'login.html';
+            }
+        }
+
+        function updateUIForUser(session) {
+            // Add user info to navigation
+            const navLinks = document.querySelector('.nav-links');
+            if (navLinks && session.role === 'user') {
+                const userInfo = document.createElement('div');
+                userInfo.className = 'user-info';
+                userInfo.innerHTML = `
+                    <span>Welcome, ${session.username}</span>
+                    <button onclick="logout()" class="logout-btn">Logout</button>
+                `;
+                navLinks.appendChild(userInfo);
+            }
+        }
+
+        async function logout() {
+            try {
+                await fetch('/api/auth/logout', { method: 'POST' });
+            } catch (error) {
+                console.error('Logout error:', error);
+            } finally {
+                localStorage.removeItem('userSession');
+                window.location.href = 'login.html';
+            }
+        }
+
+        // Simulate real-time notifications
+        setTimeout(() => {
+            showNotification('New issue reported in your area!', 'info');
+        }, 15000);
+
+        setTimeout(() => {
+            showNotification('Issue #247 has been resolved!', 'success');
+        }, 25000);
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'993c5b1353379197',t:'MTc2MTMzOTEyNC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
