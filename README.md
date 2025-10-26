@@ -45,7 +45,8 @@ A comprehensive web application for Indian citizens to report and track civic is
 - **Responsive Design**: Mobile-first approach
 
 ### Backend (Serverless)
-- **Netlify Functions**: Serverless backend functions
+- **Netlify Functions**: Serverless backend functions for Netlify deployment
+- **Vercel Serverless Functions**: Alternative serverless backend for Vercel deployment
 - **Node.js**: Server runtime environment
 - **MongoDB Atlas**: Cloud database for data storage
 - **JWT**: JSON Web Tokens for authentication
@@ -55,7 +56,9 @@ A comprehensive web application for Indian citizens to report and track civic is
 - **MongoDB Atlas**: Cloud-hosted document database
 - **Connection String**: Configured via environment variables
 
-## Netlify Deployment Setup
+## Deployment Options
+
+### Option 1: Netlify Deployment (Recommended)
 
 ### Prerequisites
 - Netlify account (free tier available)
@@ -115,13 +118,61 @@ A comprehensive web application for Indian citizens to report and track civic is
    - This starts Netlify Dev server with functions
    - Access at `http://localhost:8888`
 
+### Option 2: Vercel Deployment (Alternative)
+
+#### Prerequisites
+- Vercel account (free tier available)
+- MongoDB Atlas account (free tier available)
+- Git repository
+
+#### Vercel Deployment Steps
+
+1. **Connect Repository**
+   - Push your code to Git repository
+   - Connect repository to Vercel
+   - Vercel will auto-detect the `vercel.json` configuration
+
+2. **Configure Environment Variables**
+   - In Vercel dashboard, go to Project settings → Environment Variables
+   - Add the following variables:
+     ```
+     MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/good_city?retryWrites=true&w=majority
+     JWT_SECRET=your-secure-jwt-secret-key-here
+     ```
+
+3. **Deploy**
+   - Vercel will automatically build and deploy
+   - Your site will be available at `https://your-project-name.vercel.app`
+
+#### Local Development with Vercel CLI
+
+1. **Install Vercel CLI**
+   ```bash
+   npm install -g vercel
+   ```
+
+2. **Set Environment Variables**
+   ```bash
+   # Create .env.local file in project root
+   MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/good_city?retryWrites=true&w=majority
+   JWT_SECRET=your-secure-jwt-secret-key-here
+   ```
+
+3. **Run Locally**
+   ```bash
+   vercel dev
+   ```
+   - This starts Vercel Dev server with functions
+   - Access at `http://localhost:3000`
+
 ## Project Structure
 
 ```
 good-city/
 ├── netlify.toml                    # Netlify configuration
+├── vercel.json                     # Vercel configuration
 ├── netlify/
-│   └── functions/                  # Serverless functions
+│   └── functions/                  # Netlify serverless functions
 │       ├── auth-register.js        # User registration
 │       ├── auth-login.js          # User login
 │       ├── auth-logout.js         # User logout
@@ -133,6 +184,19 @@ good-city/
 │       ├── issues-vote.js         # Vote on issue
 │       ├── my-issues.js           # Get user's issues
 │       └── admin-stats.js         # Admin statistics
+├── api/                           # Vercel serverless functions
+│   ├── auth/
+│   │   ├── register.js            # User registration (Vercel)
+│   │   ├── login.js               # User login (Vercel)
+│   │   ├── logout.js              # User logout (Vercel)
+│   │   └── me.js                  # Get current user (Vercel)
+│   ├── issues/
+│   │   ├── index.js               # Issues CRUD (Vercel)
+│   │   ├── [id].js                # Specific issue operations (Vercel)
+│   │   └── vote.js                # Vote on issue (Vercel)
+│   ├── my-issues.js               # Get user's issues (Vercel)
+│   └── admin/
+│       └── stats.js               # Admin statistics (Vercel)
 ├── utils/
 │   └── db.js                      # Database connection utility
 ├── login.html                     # Authentication page
