@@ -29,7 +29,7 @@ app.use(session({
 }));
 
 // MongoDB connection
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/improve_my_city', {
+mongoose.connect(process.env.MONGODB_URI || 'mongodb+srv://user:user%40123@goodcity.bcwbooz.mongodb.net/', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
