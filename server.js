@@ -40,7 +40,7 @@ db.once('open', () => {
     console.log('Connected to MongoDB - improve_my_city database');
 });
 
-// User Schema
+// User Schema 
 const userSchema = new mongoose.Schema({
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true },
