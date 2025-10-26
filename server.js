@@ -396,6 +396,65 @@ app.get('/api/admin/stats', authenticateToken, requireAdmin, async (req, res) =>
     }
 });
 
+// Proxy for Google Gemini API
+app.post('/api/ai', async (req, res) => {
+    try {
+        const { input } = req.body;
+        
+        // Validate input
+        if (!input || typeof input !== 'string') {
+            return res.status(400).json({ 
+                success: false, 
+                error: 'Field "input" is required' 
+            });
+        }
+        
+        if (input.length > 1024) {
+            return res.status(400).json({ 
+                success: false, 
+                error: 'Input exceeds 1024 characters' 
+            });
+        }
+        
+        // Proxying to Python API
+        const fetch = require('node-fetch');
+        const pythonApiUrl = 'http://localhost:8000/api/ai';
+        
+        try {
+            const response = await fetch(pythonApiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ input }),
+                timeout: 30000 // 30 segundos timeout
+            });
+            
+            if (!response.ok) {
+                throw new Error(`Python API error: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            res.json(data);
+            
+        } catch (fetchError) {
+            console.error('Error connecting with Python API:', fetchError);
+            // Fallback response if Python API is not available
+            res.json({
+                reply: "⚠️ AI service is temporarily unavailable. Please try again later.",
+                model: "Fallback"
+            });
+        }
+        
+    } catch (error) {
+        console.error('Error in /api/ai:', error);
+        res.status(500).json({ 
+            success: false, 
+            error: 'Error processing request' 
+        });
+    }
+});
+
 // Serve static files
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/login.html');
@@ -404,4 +463,6 @@ app.get('/', (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
     console.log(`Access the application at http://localhost:${PORT}`);
+    console.log(`⚠️  Make sure to start the Python API: python api.py`);
+    console.log(`🤖 AI powered by Google Gemini Pro`);
 });
