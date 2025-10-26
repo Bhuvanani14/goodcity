@@ -5,8 +5,6 @@ const GovernmentBody = require('./models/GovernmentBody');
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/improve_my_city';
 
 const mongooseOptions = process.env.NODE_ENV === 'production' ? {
-    ssl: true,
-    tlsAllowInvalidCertificates: true,
     serverSelectionTimeoutMS: 5000,
     socketTimeoutMS: 45000
 } : {};

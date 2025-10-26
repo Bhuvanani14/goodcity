@@ -10,7 +10,7 @@ services:
       - key: PORT
         value: 10000
       - key: MONGODB_URI
-        value: mongodb+srv://goodcity.bcwbooz.mongodb.net/goodcity?retryWrites=true&w=majority
+        value: mongodb+srv://goodcity.bcwbooz.mongodb.net/goodcity?retryWrites=true&w=majority&ssl=true&tlsAllowInvalidCertificates=true
       - key: SESSION_SECRET
         generateValue: true
       - key: JWT_SECRET
