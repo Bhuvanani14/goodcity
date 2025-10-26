@@ -10,7 +10,7 @@ services:
       - key: PORT
         value: 10000
       - key: MONGODB_URI
-        value: mongodb+srv://user:user%40123@goodcity.bcwbooz.mongodb.net/
+        value: mongodb+srv://user:user%40123@goodcity.bcwbooz.mongodb.net
       - key: SESSION_SECRET
         generateValue: true
       - key: JWT_SECRET
