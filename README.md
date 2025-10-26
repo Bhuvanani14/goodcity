@@ -128,21 +128,39 @@ A comprehensive web application for Indian citizens to report and track civic is
 #### Vercel Deployment Steps
 
 1. **Connect Repository**
-   - Push your code to Git repository
-   - Connect repository to Vercel
+   - Push your code to Git repository (GitHub, GitLab, or Bitbucket)
+   - Go to [vercel.com](https://vercel.com) and sign in with your account
+   - Click the **"New Project"** button or go to your dashboard and click **"Import Project"**
+   - Import your repository from the connected Git provider
    - Vercel will auto-detect the `vercel.json` configuration
 
-2. **Configure Environment Variables**
-   - In Vercel dashboard, go to Project settings → Environment Variables
+2. **Configure Project Settings**
+   - **Framework Preset**: Select **"Other"** (since we're using custom serverless functions)
+   - **Root Directory**: Leave as **`./`** (project root)
+   - **Build Command**: Leave empty (no build needed for serverless functions)
+   - **Output Directory**: Leave empty
+   - **Install Command**: `npm install` (default)
+
+3. **Configure Environment Variables**
+   - In the project settings, click on the **"Environment Variables"** tab
    - Add the following variables:
      ```
      MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/good_city?retryWrites=true&w=majority
      JWT_SECRET=your-secure-jwt-secret-key-here
      ```
+   - Set the **Environment** dropdown to apply to "Production", "Preview", and "Development"
 
-3. **Deploy**
-   - Vercel will automatically build and deploy
+4. **Deploy**
+   - Click the **"Deploy"** button
+   - Vercel will automatically build and deploy your functions
+   - Wait for the deployment to complete (usually takes 1-3 minutes)
    - Your site will be available at `https://your-project-name.vercel.app`
+   - Functions will be accessible at `https://your-project-name.vercel.app/api/*`
+
+5. **Verify Deployment**
+   - Visit your deployed site URL
+   - Try logging in with demo credentials (`user` / `user@123`)
+   - Check the Vercel dashboard under "Functions" tab to see your deployed functions
 
 #### Local Development with Vercel CLI
 
