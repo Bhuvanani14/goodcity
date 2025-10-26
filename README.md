@@ -1,13 +1,13 @@
 <<<<<<< HEAD
 # Good City - Civic Issue Reporting & Tracking Application
 
-A comprehensive web application for Indian citizens to report and track civic issues in their cities, with role-based access for both citizens and municipal administrators.
+A comprehensive web application for Indian citizens to report and track civic issues in their cities, with role-based access for both citizens and municipal administrators. Now deployed on Netlify with serverless functions!
 
 ## Features
 
 ### 🏙️ Core Features
 - **Issue Reporting**: Indian citizens can report various civic issues with photos and location data
-- **Real-time Tracking**: Track issue status from submission to resolution by municipal authorities 
+- **Real-time Tracking**: Track issue status from submission to resolution by municipal authorities
 - **Role-based Access**: Separate interfaces for citizens and municipal administrators
 - **AI Chatbot**: Interactive assistant for issue guidance and status queries with India-specific responses
 - **Priority System**: Color-coded priority levels (low, moderate, urgent) based on Indian municipal standards
@@ -17,7 +17,7 @@ A comprehensive web application for Indian citizens to report and track civic is
 ### 🔐 Authentication System
 - **User Login**: Indian citizens can log in to report and track issues
 - **Admin Login**: Municipal administrators have access to management dashboard
-- **Session Management**: Secure session handling with 24-hour expiration
+- **JWT Tokens**: Secure token-based authentication for serverless environment
 - **Role Verification**: Server-side role validation for protected routes
 
 ### 📊 Admin Dashboard
@@ -44,86 +44,142 @@ A comprehensive web application for Indian citizens to report and track civic is
 - **JavaScript**: Dynamic functionality and API integration
 - **Responsive Design**: Mobile-first approach
 
-### Backend
+### Backend (Serverless)
+- **Netlify Functions**: Serverless backend functions
 - **Node.js**: Server runtime environment
-- **Express.js**: Web application framework
-- **MongoDB**: NoSQL database for data storage
+- **MongoDB Atlas**: Cloud database for data storage
 - **JWT**: JSON Web Tokens for authentication
 - **bcryptjs**: Password hashing and security
 
 ### Database
-- **MongoDB**: Document-based database
-- **Connection String**: `mongodb://localhost:27017/`
+- **MongoDB Atlas**: Cloud-hosted document database
+- **Connection String**: Configured via environment variables
 
-## Installation & Setup
+## Netlify Deployment Setup
 
 ### Prerequisites
-- Node.js (v14 or higher)
-- MongoDB (running on localhost:27017)
-- npm or yarn package manager
+- Netlify account (free tier available)
+- MongoDB Atlas account (free tier available)
+- Git repository (GitHub, GitLab, or Bitbucket)
 
-### Installation Steps
+### MongoDB Atlas Setup
 
-1. **Clone or Download** the project files to your local machine
+1. **Create MongoDB Atlas Cluster**
+   - Sign up at [MongoDB Atlas](https://www.mongodb.com/atlas)
+   - Create a free cluster
+   - Create database user with read/write permissions
+   - Whitelist IP addresses (0.0.0.0/0 for development)
 
-2. **Install Dependencies**
+2. **Get Connection String**
+   - Go to Clusters → Connect → Connect your application
+   - Copy the connection string
+   - Replace `<password>` with your database user password
+
+### Netlify Deployment Steps
+
+1. **Connect Repository**
+   - Push your code to Git repository
+   - Connect repository to Netlify
+   - Netlify will auto-detect the `netlify.toml` configuration
+
+2. **Configure Environment Variables**
+   - In Netlify dashboard, go to Site settings → Environment variables
+   - Add the following variables:
+     ```
+     MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/good_city?retryWrites=true&w=majority
+     JWT_SECRET=your-secure-jwt-secret-key-here
+     ```
+
+3. **Deploy**
+   - Netlify will automatically build and deploy
+   - Your site will be available at `https://your-site-name.netlify.app`
+
+### Local Development with Netlify CLI
+
+1. **Install Netlify CLI**
    ```bash
-   npm install
+   npm install -g netlify-cli
    ```
 
-3. **Start MongoDB**
-   - Ensure MongoDB is running on `mongodb://localhost:27017/`
-   - The application will automatically create the database `login_credentials`
-
-4. **Start the Server**
+2. **Set Environment Variables**
    ```bash
-   npm start
-   ```
-   Or for development with auto-restart:
-   ```bash
-   npm run dev
+   # Create .env file in project root
+   MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/good_city?retryWrites=true&w=majority
+   JWT_SECRET=your-secure-jwt-secret-key-here
    ```
 
-5. **Access the Application**
-   - Open your browser and navigate to `http://localhost:3000`
-   - You'll be redirected to the login page
-   - Use the demo credentials to access the application
+3. **Run Locally**
+   ```bash
+   npm run netlify
+   ```
+   - This starts Netlify Dev server with functions
+   - Access at `http://localhost:8888`
 
 ## Project Structure
 
 ```
 good-city/
-├── login.html              # Authentication page
-├── index.html              # Main citizen dashboard
-├── admin_dashboard.html    # Admin management interface
-├── Infra.html             # Infrastructure issues page
-├── Public_Utilities.html  # Public utilities issues page
-├── Safety_&_Law_Enforcement.html # Safety issues page
-├── sanitation.html        # Sanitation issues page
+├── netlify.toml                    # Netlify configuration
+├── netlify/
+│   └── functions/                  # Serverless functions
+│       ├── auth-register.js        # User registration
+│       ├── auth-login.js          # User login
+│       ├── auth-logout.js         # User logout
+│       ├── auth-me.js             # Get current user
+│       ├── issues-get.js          # Get all issues
+│       ├── issues-post.js         # Create new issue
+│       ├── issues-get-id.js       # Get specific issue
+│       ├── issues-put-id.js       # Update issue
+│       ├── issues-vote.js         # Vote on issue
+│       ├── my-issues.js           # Get user's issues
+│       └── admin-stats.js         # Admin statistics
+├── utils/
+│   └── db.js                      # Database connection utility
+├── login.html                     # Authentication page
+├── index.html                     # Main citizen dashboard
+├── admin_dashboard.html           # Admin management interface
+├── Infra.html                     # Infrastructure issues page
+├── Public_Utilities.html          # Public utilities issues page
+├── Safety_&_Law_Enforcement.html  # Safety issues page
+├── sanitation.html                # Sanitation issues page
 ├── Civic_Amenities_&_Services.html # Civic amenities page
 ├── environment_&_public_spaces.html # Environment issues page
-├── server.js              # Node.js backend server
-├── package.json           # Project dependencies
-├── start.bat              # Windows startup script
-├── start.sh               # Linux/Mac startup script
-└── README.md              # This file
+├── server.js                      # Legacy Express server (for reference)
+├── package.json                   # Project dependencies
+├── start.bat                      # Windows startup script
+├── start.sh                       # Linux/Mac startup script
+└── README.md                      # This file
 ```
 
-## API Endpoints
+## API Endpoints (Netlify Functions)
 
 ### Authentication
-- `POST /api/auth/login` - User login
-- `POST /api/auth/logout` - User logout
-- `GET /api/auth/me` - Get current user info
+- `POST /.netlify/functions/auth-login` - User login
+- `POST /.netlify/functions/auth-logout` - User logout
+- `GET /.netlify/functions/auth-me` - Get current user info
+- `POST /.netlify/functions/auth-register` - User registration
 
 ### Issues
-- `GET /api/issues` - Get all issues (with filters)
-- `POST /api/issues` - Create new issue
-- `PUT /api/issues/:id` - Update issue status
-- `POST /api/issues/:id/vote` - Vote on issue
+- `GET /.netlify/functions/issues-get` - Get all issues (with filters)
+- `POST /.netlify/functions/issues-post` - Create new issue
+- `GET /.netlify/functions/issues-get-id?id=:id` - Get specific issue
+- `PUT /.netlify/functions/issues-put-id?id=:id` - Update issue status
+- `POST /.netlify/functions/issues-vote?id=:id` - Vote on issue
+- `GET /.netlify/functions/my-issues` - Get user's reported issues
 
 ### Admin
-- `GET /api/admin/stats` - Get admin statistics
+- `GET /.netlify/functions/admin-stats` - Get admin statistics
+
+## Environment Variables
+
+Create a `.env` file in the project root for local development:
+
+```env
+MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/good_city?retryWrites=true&w=majority
+JWT_SECRET=your-secure-jwt-secret-key-here
+```
+
+For Netlify deployment, set these in the Netlify dashboard under Site settings → Environment variables.
 
 ## Usage Guide
 
@@ -145,41 +201,37 @@ good-city/
 
 - **Password Hashing**: All passwords are securely hashed using bcrypt
 - **JWT Tokens**: Secure token-based authentication
-- **Session Management**: Server-side session handling
-- **Role Validation**: Server-side role verification for all protected routes
+- **Environment Variables**: Sensitive data stored securely
+- **CORS Configuration**: Proper cross-origin resource sharing
 - **Input Validation**: Server-side validation for all user inputs
 
-## Development
+## Database Seeding
 
-### Adding New Features
-1. Update the frontend HTML/CSS/JavaScript files
-2. Add corresponding API endpoints in `server.js`
-3. Update database schemas if needed
-4. Test authentication and authorization
+To seed the database with demo data:
 
-### Database Schema
-- **Database**: `login_credentials`
-- **Users Collection**: username, password, role, email, timestamps
-- **Issues Collection**: title, description, category, priority, status, location, reporter, votes, timestamps
-- **Sessions Collection**: session data for user authentication
+1. Update `seed.js` to use MongoDB Atlas connection string
+2. Run: `node seed.js`
 
 ## Troubleshooting
 
 ### Common Issues
-1. **MongoDB Connection Error**: Ensure MongoDB is running on localhost:27017
-2. **Port Already in Use**: Change the PORT in server.js or kill the process using port 3000
-3. **Authentication Issues**: Clear browser localStorage and try logging in again
-4. **CORS Errors**: Ensure the server is running and accessible
+1. **Function Timeout**: Netlify functions have a 10-second timeout limit
+2. **Cold Starts**: First function call may be slower due to cold starts
+3. **MongoDB Connection**: Ensure MongoDB Atlas IP whitelist includes 0.0.0.0/0
+4. **Environment Variables**: Check that all required env vars are set in Netlify
+5. **CORS Errors**: Ensure functions return proper CORS headers
 
 ### Debug Mode
-Enable debug logging by setting `NODE_ENV=development` in your environment.
+- Use Netlify CLI for local debugging: `npm run netlify`
+- Check Netlify function logs in the dashboard
+- Enable debug logging in functions by adding console.log statements
 
 ## Contributing
 
 1. Fork the repository
 2. Create a feature branch
 3. Make your changes
-4. Test thoroughly
+4. Test thoroughly with Netlify CLI
 5. Submit a pull request
 
 ## License

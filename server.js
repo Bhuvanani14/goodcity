@@ -20,7 +20,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({
-        mongoUrl: 'mongodb://localhost:27017/login_credentials'
+        mongoUrl: 'mongodb://localhost:27017/improve_my_city'
     }),
     cookie: {
         secure: false,
@@ -29,7 +29,7 @@ app.use(session({
 }));
 
 // MongoDB connection
-mongoose.connect('mongodb://localhost:27017/login_credentials', {
+mongoose.connect('mongodb://localhost:27017/improve_my_city', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
@@ -37,7 +37,7 @@ mongoose.connect('mongodb://localhost:27017/login_credentials', {
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 db.once('open', () => {
-    console.log('Connected to MongoDB - login_credentials database');
+    console.log('Connected to MongoDB - improve_my_city database');
 });
 
 // User Schema
@@ -168,54 +168,29 @@ app.post('/api/auth/login', async (req, res) => {
     try {
         const { username, password, role } = req.body;
 
-        // First check demo credentials
-        const demoCredentials = {
-            user: { username: 'user', password: 'user@123' },
-            admin: { username: 'admin', password: 'admin@123' }
-        };
+        let user = await User.findOne({ username });
+        if (!user) {
+            return res.status(401).json({
+                success: false,
+                message: 'Invalid username or password'
+            });
+        }
 
-        const expectedCreds = demoCredentials[role];
-        let user = null;
+        // Verify password
+        const isValidPassword = await bcrypt.compare(password, user.password);
+        if (!isValidPassword) {
+            return res.status(401).json({
+                success: false,
+                message: 'Invalid username or password'
+            });
+        }
 
-        if (username === expectedCreds.username && password === expectedCreds.password) {
-            // Demo user login
-            user = await User.findOne({ username });
-            if (!user) {
-                // Create demo user if doesn't exist
-                user = new User({
-                    username,
-                    password: await bcrypt.hash(password, 10),
-                    role,
-                    email: `${username}@goodcity.in`
-                });
-                await user.save();
-            }
-        } else {
-            // Check database for registered users
-            user = await User.findOne({ username });
-            if (!user) {
-                return res.status(401).json({
-                    success: false,
-                    message: 'Invalid username or password'
-                });
-            }
-
-            // Verify password
-            const isValidPassword = await bcrypt.compare(password, user.password);
-            if (!isValidPassword) {
-                return res.status(401).json({
-                    success: false,
-                    message: 'Invalid username or password'
-                });
-            }
-
-            // Check role if specified
-            if (role && user.role !== role) {
-                return res.status(401).json({
-                    success: false,
-                    message: 'Invalid role for this user'
-                });
-            }
+        // Check role if specified
+        if (role && user.role !== role) {
+            return res.status(401).json({
+                success: false,
+                message: 'Invalid role for this user'
+            });
         }
 
         // Generate token
@@ -322,11 +297,27 @@ app.post('/api/issues', authenticateToken, async (req, res) => {
     }
 });
 
+app.get('/api/issues/:id', async (req, res) => {
+    try {
+        const issue = await Issue.findById(req.params.id)
+            .populate('reporter', 'username')
+            .populate('assignedTo', 'username');
+
+        if (!issue) {
+            return res.status(404).json({ message: 'Issue not found' });
+        }
+
+        res.json(issue);
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching issue' });
+    }
+});
+
 app.put('/api/issues/:id', authenticateToken, async (req, res) => {
     try {
         const { status, assignedTo } = req.body;
         const issue = await Issue.findById(req.params.id);
-        
+
         if (!issue) {
             return res.status(404).json({ message: 'Issue not found' });
         }
@@ -334,7 +325,7 @@ app.put('/api/issues/:id', authenticateToken, async (req, res) => {
         if (status) issue.status = status;
         if (assignedTo) issue.assignedTo = assignedTo;
         if (status === 'resolved') issue.resolvedAt = new Date();
-        
+
         issue.updatedAt = new Date();
         await issue.save();
 
@@ -361,16 +352,34 @@ app.post('/api/issues/:id/vote', authenticateToken, async (req, res) => {
     }
 });
 
+// Get user's reported issues
+app.get('/api/my-issues', authenticateToken, async (req, res) => {
+    try {
+        const issues = await Issue.find({ reporter: req.user.id })
+            .populate('reporter', 'username')
+            .populate('assignedTo', 'username')
+            .sort({ createdAt: -1 });
+
+        res.json(issues);
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching user issues' });
+    }
+});
+
 // Admin routes
 app.get('/api/admin/stats', authenticateToken, requireAdmin, async (req, res) => {
     try {
-        const totalIssues = await Issue.countDocuments();
-        const resolvedIssues = await Issue.countDocuments({ status: 'resolved' });
-        const urgentIssues = await Issue.countDocuments({ priority: 'urgent' });
+        const category = req.query.category;
+        const filter = category ? { category } : {};
+
+        const totalIssues = await Issue.countDocuments(filter);
+        const resolvedIssues = await Issue.countDocuments({ ...filter, status: 'resolved' });
+        const urgentIssues = await Issue.countDocuments({ ...filter, priority: 'urgent' });
+        const inProgressIssues = await Issue.countDocuments({ ...filter, status: 'in_progress' });
         const activeUsers = await User.countDocuments({ isActive: true });
 
         const avgResponseTime = await Issue.aggregate([
-            { $match: { status: 'resolved', resolvedAt: { $exists: true } } },
+            { $match: { status: 'resolved', resolvedAt: { $exists: true }, ...filter } },
             {
                 $project: {
                     responseTime: {
@@ -388,6 +397,7 @@ app.get('/api/admin/stats', authenticateToken, requireAdmin, async (req, res) =>
             totalIssues,
             resolvedIssues,
             urgentIssues,
+            inProgressIssues,
             activeUsers,
             avgResponseTime: avgResponseTime[0]?.avgResponseTime || 0
         });
@@ -401,7 +411,11 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + '/login.html');
 });
 
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-    console.log(`Access the application at http://localhost:${PORT}`);
-});
+module.exports = { User, Issue };
+
+if (require.main === module) {
+    app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+        console.log(`Access the application at http://localhost:${PORT}`);
+    });
+}

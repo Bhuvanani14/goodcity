@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Infrastructure & Road Safety - Good City</title>
+    <title>Civic Amenities & Services - Good City</title>
     <style>
         body {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #cbd5e1 100%);
-            color: #1e293b;
+            background: linear-gradient(135deg, #0B0A2A 0%, #11114C 50%, #16186E 100%);
+            color: white;
             min-height: 100%;
         }
 
@@ -21,15 +21,14 @@
 
         /* Navigation */
         nav {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(11, 10, 42, 0.95);
             backdrop-filter: blur(10px);
             padding: 1rem 2rem;
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
-            border-bottom: 1px solid rgba(226, 232, 240, 0.5);
+            box-shadow: 0 2px 20px rgba(34, 36, 179, 0.3);
         }
 
         .nav-container {
@@ -43,8 +42,8 @@
         .logo {
             font-size: 1.8rem;
             font-weight: bold;
-            color: #3b82f6;
-            text-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+            color: #2224B3;
+            text-shadow: 0 0 10px rgba(34, 36, 179, 0.5);
         }
 
         .nav-links {
@@ -56,14 +55,14 @@
         }
 
         .nav-links a {
-            color: #475569;
+            color: white;
             text-decoration: none;
             transition: color 0.3s ease;
             font-weight: 500;
         }
 
         .nav-links a:hover {
-            color: #3b82f6;
+            color: #2224B3;
         }
 
         /* Main Content */
@@ -86,7 +85,7 @@
         .page-header h1 {
             font-size: 2.8rem;
             margin-bottom: 0.5rem;
-            background: linear-gradient(45deg, #3b82f6, #1d4ed8);
+            background: linear-gradient(45deg, #2224B3, #1C1E91);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -101,7 +100,6 @@
         .page-header p {
             font-size: 1.2rem;
             opacity: 0.8;
-            color: #64748b;
             max-width: 600px;
             margin: 0 auto;
         }
@@ -115,18 +113,17 @@
         }
 
         .stat-item {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(248, 250, 252, 0.8));
-            border: 1px solid rgba(226, 232, 240, 0.5);
+            background: linear-gradient(135deg, rgba(28, 30, 145, 0.2), rgba(34, 36, 179, 0.1));
+            border: 1px solid rgba(34, 36, 179, 0.3);
             border-radius: 10px;
             padding: 1.5rem;
             text-align: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
         }
 
         .stat-number {
             font-size: 2rem;
             font-weight: bold;
-            color: #3b82f6;
+            color: #2224B3;
             display: block;
         }
 
@@ -134,7 +131,6 @@
             opacity: 0.8;
             font-size: 0.9rem;
             margin-top: 0.5rem;
-            color: #64748b;
         }
 
         /* Filter Section */
@@ -148,9 +144,9 @@
 
         .filter-btn {
             padding: 0.7rem 1.2rem;
-            border: 1px solid rgba(226, 232, 240, 0.5);
+            border: 1px solid rgba(34, 36, 179, 0.5);
             background: transparent;
-            color: #475569;
+            color: white;
             border-radius: 25px;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -159,9 +155,8 @@
 
         .filter-btn.active,
         .filter-btn:hover {
-            background: linear-gradient(45deg, #3b82f6, #1d4ed8);
-            border-color: #3b82f6;
-            color: white;
+            background: linear-gradient(45deg, #2224B3, #1C1E91);
+            border-color: #2224B3;
         }
 
         /* Issues List */
@@ -170,18 +165,17 @@
         }
 
         .issue-card {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(248, 250, 252, 0.8));
-            border: 1px solid rgba(226, 232, 240, 0.5);
+            background: linear-gradient(135deg, rgba(17, 17, 76, 0.3), rgba(22, 24, 110, 0.2));
+            border: 1px solid rgba(34, 36, 179, 0.4);
             border-radius: 15px;
             padding: 1.5rem;
             margin-bottom: 1.5rem;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
         }
 
         .issue-card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.15);
+            box-shadow: 0 8px 25px rgba(34, 36, 179, 0.3);
         }
 
         .issue-header {
@@ -194,7 +188,7 @@
         .issue-title {
             font-size: 1.3rem;
             font-weight: 600;
-            color: #3b82f6;
+            color: #2224B3;
             margin: 0 0 0.5rem 0;
         }
 
@@ -230,24 +224,32 @@
             font-size: 0.9rem;
             opacity: 0.7;
             margin-bottom: 1rem;
-            color: #64748b;
         }
 
         .issue-description {
             line-height: 1.6;
             margin-bottom: 1rem;
             opacity: 0.9;
-            color: #475569;
         }
 
         .issue-location {
-            background: rgba(59, 130, 246, 0.1);
+            background: rgba(34, 36, 179, 0.2);
             padding: 0.5rem 1rem;
             border-radius: 8px;
             font-size: 0.9rem;
             margin-bottom: 1rem;
             display: inline-block;
-            color: #3b82f6;
+        }
+
+        .service-type {
+            background: rgba(139, 92, 246, 0.2);
+            color: #a78bfa;
+            padding: 0.3rem 0.8rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-left: 1rem;
+            display: inline-block;
         }
 
         .issue-actions {
@@ -260,9 +262,9 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            background: linear-gradient(45deg, rgba(59, 130, 246, 0.1), rgba(29, 78, 216, 0.05));
-            border: 1px solid rgba(59, 130, 246, 0.3);
-            color: #3b82f6;
+            background: linear-gradient(45deg, rgba(34, 36, 179, 0.3), rgba(28, 30, 145, 0.2));
+            border: 1px solid rgba(34, 36, 179, 0.5);
+            color: white;
             padding: 0.7rem 1.2rem;
             border-radius: 8px;
             cursor: pointer;
@@ -271,20 +273,18 @@
         }
 
         .upvote-btn:hover {
-            background: linear-gradient(45deg, #3b82f6, #1d4ed8);
-            color: white;
+            background: linear-gradient(45deg, #2224B3, #1C1E91);
             transform: translateY(-1px);
         }
 
         .upvote-btn.voted {
-            background: linear-gradient(45deg, #3b82f6, #1d4ed8);
-            color: white;
-            box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
+            background: linear-gradient(45deg, #2224B3, #1C1E91);
+            box-shadow: 0 0 15px rgba(34, 36, 179, 0.4);
         }
 
         .vote-count {
             font-weight: bold;
-            color: #3b82f6;
+            color: #2224B3;
         }
 
         /* Floating Action Button */
@@ -294,20 +294,20 @@
             right: 2rem;
             width: 60px;
             height: 60px;
-            background: linear-gradient(45deg, #3b82f6, #1d4ed8);
+            background: linear-gradient(45deg, #2224B3, #1C1E91);
             border: none;
             border-radius: 50%;
             color: white;
             font-size: 1.5rem;
             cursor: pointer;
-            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+            box-shadow: 0 4px 20px rgba(34, 36, 179, 0.4);
             transition: all 0.3s ease;
             z-index: 999;
         }
 
         .fab:hover {
             transform: scale(1.1);
-            box-shadow: 0 6px 25px rgba(59, 130, 246, 0.4);
+            box-shadow: 0 6px 25px rgba(34, 36, 179, 0.6);
         }
 
         /* Modal */
@@ -318,7 +318,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(11, 10, 42, 0.9);
             backdrop-filter: blur(10px);
             z-index: 2000;
             overflow-y: auto;
@@ -332,15 +332,14 @@
         }
 
         .modal-content {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 250, 252, 0.9));
-            border: 2px solid rgba(59, 130, 246, 0.3);
+            background: linear-gradient(135deg, rgba(17, 17, 76, 0.9), rgba(22, 24, 110, 0.8));
+            border: 2px solid rgba(34, 36, 179, 0.5);
             border-radius: 20px;
             padding: 2rem;
             max-width: 600px;
             width: 100%;
             max-height: 90vh;
             overflow-y: auto;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
         }
 
         .modal-header {
@@ -352,14 +351,14 @@
 
         .modal-title {
             font-size: 1.8rem;
-            color: #3b82f6;
+            color: #2224B3;
             margin: 0;
         }
 
         .close-btn {
             background: none;
             border: none;
-            color: #64748b;
+            color: white;
             font-size: 1.5rem;
             cursor: pointer;
             padding: 0.5rem;
@@ -368,8 +367,7 @@
         }
 
         .close-btn:hover {
-            background: rgba(239, 68, 68, 0.1);
-            color: #ef4444;
+            background: rgba(239, 68, 68, 0.2);
         }
 
         .form-group {
@@ -380,7 +378,7 @@
             display: block;
             margin-bottom: 0.5rem;
             font-weight: 500;
-            color: #3b82f6;
+            color: #2224B3;
         }
 
         .form-group input,
@@ -388,39 +386,38 @@
         .form-group select {
             width: 100%;
             padding: 1rem;
-            border: 1px solid rgba(226, 232, 240, 0.5);
+            border: 1px solid rgba(34, 36, 179, 0.3);
             border-radius: 8px;
-            background: rgba(255, 255, 255, 0.8);
-            color: #1e293b;
+            background: rgba(11, 10, 42, 0.5);
+            color: white;
             font-size: 1rem;
         }
 
         .form-group input::placeholder,
         .form-group textarea::placeholder {
-            color: rgba(100, 116, 139, 0.7);
+            color: rgba(255, 255, 255, 0.5);
         }
 
         .form-group input:focus,
         .form-group textarea:focus,
         .form-group select:focus {
             outline: none;
-            border-color: #3b82f6;
-            box-shadow: 0 0 10px rgba(59, 130, 246, 0.2);
+            border-color: #2224B3;
+            box-shadow: 0 0 10px rgba(34, 36, 179, 0.3);
         }
 
         .file-upload {
-            border: 2px dashed rgba(59, 130, 246, 0.3);
+            border: 2px dashed rgba(34, 36, 179, 0.5);
             border-radius: 8px;
             padding: 2rem;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
-            background: rgba(59, 130, 246, 0.02);
         }
 
         .file-upload:hover {
-            border-color: #3b82f6;
-            background: rgba(59, 130, 246, 0.05);
+            border-color: #2224B3;
+            background: rgba(34, 36, 179, 0.1);
         }
 
         .file-upload input {
@@ -428,7 +425,7 @@
         }
 
         .submit-btn {
-            background: linear-gradient(45deg, #3b82f6, #1d4ed8);
+            background: linear-gradient(45deg, #2224B3, #1C1E91);
             color: white;
             border: none;
             padding: 1rem 2rem;
@@ -442,7 +439,7 @@
 
         .submit-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
+            box-shadow: 0 5px 15px rgba(34, 36, 179, 0.4);
         }
 
         /* Responsive Design */
@@ -487,7 +484,7 @@
         <div class="nav-container">
             <div class="logo">🏙️ Good City</div>
             <ul class="nav-links">
-                <li><a href="index.html">← Back to Home</a></li>
+                <li><a href="#home">Home</a></li>
                 <li><a href="#categories">Categories</a></li>
                 <li><a href="#chat">AI Assistant</a></li>
                 <li><a href="#contributors">Contributors</a></li>
@@ -498,26 +495,26 @@
 
     <main>
         <header class="page-header">
-            <span class="category-icon">🛣️</span>
-            <h1>Infrastructure & Road Safety</h1>
-            <p>Report and track road conditions, traffic issues, and infrastructure problems to help build safer streets for everyone in our community.</p>
+            <span class="category-icon">🏛️</span>
+            <h1>Civic Amenities & Services</h1>
+            <p>Report issues with public facilities, community centers, libraries, municipal services, and civic infrastructure that serve our community's daily needs.</p>
         </header>
 
         <section class="stats-bar">
             <div class="stat-item">
-                <span class="stat-number">47</span>
+                <span class="stat-number">29</span>
                 <div class="stat-label">Total Issues</div>
             </div>
             <div class="stat-item">
-                <span class="stat-number">12</span>
+                <span class="stat-number">6</span>
                 <div class="stat-label">Urgent Priority</div>
             </div>
             <div class="stat-item">
-                <span class="stat-number">23</span>
+                <span class="stat-number">14</span>
                 <div class="stat-label">In Progress</div>
             </div>
             <div class="stat-item">
-                <span class="stat-number">18</span>
+                <span class="stat-number">12</span>
                 <div class="stat-label">Resolved</div>
             </div>
         </section>
@@ -527,133 +524,206 @@
             <button class="filter-btn">Urgent</button>
             <button class="filter-btn">Moderate</button>
             <button class="filter-btn">Low Priority</button>
-            <button class="filter-btn">Recent</button>
-            <button class="filter-btn">Most Voted</button>
+            <button class="filter-btn">Libraries</button>
+            <button class="filter-btn">Community Centers</button>
+            <button class="filter-btn">Public Buildings</button>
+            <button class="filter-btn">Accessibility</button>
         </section>
 
         <section class="issues-container">
             <article class="issue-card">
                 <div class="issue-header">
                     <div>
-                        <h3 class="issue-title">Large Pothole on MG Road Intersection</h3>
+                        <h3 class="issue-title">Broken Accessibility Ramp at City Hall</h3>
                         <div class="issue-meta">
-                            <span>📅 Reported 3 days ago</span>
-                            <span>👤 By Priya S.</span>
+                            <span>📅 Reported 1 day ago</span>
+                            <span>👤 By Margaret S.</span>
                         </div>
                     </div>
-                    <span class="priority-badge priority-urgent">Urgent</span>
+                    <div>
+                        <span class="priority-badge priority-urgent">Urgent</span>
+                        <span class="service-type">Accessibility</span>
+                    </div>
                 </div>
                 <p class="issue-description">
-                    There's a massive pothole at the intersection of MG Road and Brigade Road that's causing damage to vehicles and creating a safety hazard. Multiple cars have already suffered tire damage, and it's particularly dangerous during monsoon when it fills with water.
+                    The wheelchair accessibility ramp at the main entrance of City Hall has a large crack and loose handrail, making it unsafe for wheelchair users and people with mobility aids. This prevents equal access to municipal services.
                 </p>
-                <div class="issue-location">📍 MG Road & Brigade Road, Bangalore</div>
+                <div class="issue-location">📍 City Hall, Main Entrance</div>
+                <div class="issue-actions">
+                    <button class="upvote-btn" onclick="toggleUpvote(this)">
+                        <span>👍</span>
+                        <span>Upvote</span>
+                        <span class="vote-count">(41)</span>
+                    </button>
+                    <span style="opacity: 0.7;">Status: Emergency Repair Scheduled</span>
+                </div>
+            </article>
+
+            <article class="issue-card">
+                <div class="issue-header">
+                    <div>
+                        <h3 class="issue-title">HVAC System Failure at Community Center</h3>
+                        <div class="issue-meta">
+                            <span>📅 Reported 2 days ago</span>
+                            <span>👤 By David L.</span>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="priority-badge priority-urgent">Urgent</span>
+                        <span class="service-type">Community Centers</span>
+                    </div>
+                </div>
+                <p class="issue-description">
+                    The heating and cooling system at Westside Community Center has completely failed. With upcoming senior programs and children's activities, the facility is currently unusable due to extreme temperatures.
+                </p>
+                <div class="issue-location">📍 Westside Community Center</div>
+                <div class="issue-actions">
+                    <button class="upvote-btn" onclick="toggleUpvote(this)">
+                        <span>👍</span>
+                        <span>Upvote</span>
+                        <span class="vote-count">(35)</span>
+                    </button>
+                    <span style="opacity: 0.7;">Status: HVAC Contractor Called</span>
+                </div>
+            </article>
+
+            <article class="issue-card">
+                <div class="issue-header">
+                    <div>
+                        <h3 class="issue-title">Limited Library Hours Affecting Students</h3>
+                        <div class="issue-meta">
+                            <span>📅 Reported 4 days ago</span>
+                            <span>👤 By Teacher's Union Rep</span>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="priority-badge priority-moderate">Moderate</span>
+                        <span class="service-type">Libraries</span>
+                    </div>
+                </div>
+                <p class="issue-description">
+                    The Main Library has reduced evening and weekend hours due to staffing shortages, limiting access for students who need to study after school and working adults who rely on library services and internet access.
+                </p>
+                <div class="issue-location">📍 Main Public Library</div>
+                <div class="issue-actions">
+                    <button class="upvote-btn" onclick="toggleUpvote(this)">
+                        <span>👍</span>
+                        <span>Upvote</span>
+                        <span class="vote-count">(28)</span>
+                    </button>
+                    <span style="opacity: 0.7;">Status: Budget Review for Extended Hours</span>
+                </div>
+            </article>
+
+            <article class="issue-card">
+                <div class="issue-header">
+                    <div>
+                        <h3 class="issue-title">Outdated Playground Equipment at Recreation Center</h3>
+                        <div class="issue-meta">
+                            <span>📅 Reported 1 week ago</span>
+                            <span>👤 By Parent Council</span>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="priority-badge priority-moderate">Moderate</span>
+                        <span class="service-type">Community Centers</span>
+                    </div>
+                </div>
+                <p class="issue-description">
+                    The playground equipment at the Recreation Center is over 15 years old and shows signs of wear. Some equipment has rust, loose bolts, and outdated safety features that don't meet current playground standards.
+                </p>
+                <div class="issue-location">📍 Central Recreation Center, Playground Area</div>
                 <div class="issue-actions">
                     <button class="upvote-btn" onclick="toggleUpvote(this)">
                         <span>👍</span>
                         <span>Upvote</span>
                         <span class="vote-count">(24)</span>
                     </button>
-                    <span style="opacity: 0.7;">Status: Under Review</span>
+                    <span style="opacity: 0.7;">Status: Safety Inspection Scheduled</span>
                 </div>
             </article>
 
             <article class="issue-card">
                 <div class="issue-header">
                     <div>
-                        <h3 class="issue-title">Broken Street Light on Elm Street</h3>
-                        <div class="issue-meta">
-                            <span>📅 Reported 1 week ago</span>
-                            <span>👤 By Mike R.</span>
-                        </div>
-                    </div>
-                    <span class="priority-badge priority-moderate">Moderate</span>
-                </div>
-                <p class="issue-description">
-                    The street light near house number 245 on Elm Street has been out for over two weeks. This area gets very dark at night and poses a safety risk for pedestrians and cyclists.
-                </p>
-                <div class="issue-location">📍 245 Elm Street, Residential Area</div>
-                <div class="issue-actions">
-                    <button class="upvote-btn" onclick="toggleUpvote(this)">
-                        <span>👍</span>
-                        <span>Upvote</span>
-                        <span class="vote-count">(18)</span>
-                    </button>
-                    <span style="opacity: 0.7;">Status: Scheduled for Repair</span>
-                </div>
-            </article>
-
-            <article class="issue-card">
-                <div class="issue-header">
-                    <div>
-                        <h3 class="issue-title">Faded Road Markings on Highway 101</h3>
+                        <h3 class="issue-title">Insufficient Parking at Senior Center</h3>
                         <div class="issue-meta">
                             <span>📅 Reported 5 days ago</span>
-                            <span>👤 By Jennifer L.</span>
+                            <span>👤 By Eleanor R.</span>
                         </div>
                     </div>
-                    <span class="priority-badge priority-moderate">Moderate</span>
+                    <div>
+                        <span class="priority-badge priority-moderate">Moderate</span>
+                        <span class="service-type">Community Centers</span>
+                    </div>
                 </div>
                 <p class="issue-description">
-                    The lane markings on Highway 101 between exits 15 and 17 are severely faded and barely visible, especially during rainy conditions. This creates confusion for drivers and increases accident risk.
+                    The Senior Center parking lot only has 12 spaces but regularly hosts programs with 30+ participants. Seniors are forced to park several blocks away, which is difficult for those with mobility issues.
                 </p>
-                <div class="issue-location">📍 Highway 101, Exits 15-17</div>
+                <div class="issue-location">📍 Golden Years Senior Center</div>
                 <div class="issue-actions">
                     <button class="upvote-btn" onclick="toggleUpvote(this)">
                         <span>👍</span>
                         <span>Upvote</span>
-                        <span class="vote-count">(31)</span>
+                        <span class="vote-count">(19)</span>
                     </button>
-                    <span style="opacity: 0.7;">Status: Under Review</span>
+                    <span style="opacity: 0.7;">Status: Parking Expansion Study</span>
                 </div>
             </article>
 
             <article class="issue-card">
                 <div class="issue-header">
                     <div>
-                        <h3 class="issue-title">Missing Stop Sign at School Zone</h3>
+                        <h3 class="issue-title">Missing Directional Signage at Municipal Complex</h3>
                         <div class="issue-meta">
-                            <span>📅 Reported 2 days ago</span>
-                            <span>👤 By David K.</span>
+                            <span>📅 Reported 3 days ago</span>
+                            <span>👤 By Visitor Services</span>
                         </div>
                     </div>
-                    <span class="priority-badge priority-urgent">Urgent</span>
+                    <div>
+                        <span class="priority-badge priority-low">Low</span>
+                        <span class="service-type">Public Buildings</span>
+                    </div>
                 </div>
                 <p class="issue-description">
-                    The stop sign at the intersection near Lincoln Elementary School was knocked down during last week's storm and hasn't been replaced. This is extremely dangerous during school hours with children crossing.
+                    The Municipal Complex lacks clear directional signage, making it difficult for visitors to find specific departments like permits, tax office, or public records. Better wayfinding would improve citizen experience.
                 </p>
-                <div class="issue-location">📍 School Street & 3rd Avenue, School Zone</div>
+                <div class="issue-location">📍 Municipal Complex, All Buildings</div>
                 <div class="issue-actions">
                     <button class="upvote-btn" onclick="toggleUpvote(this)">
                         <span>👍</span>
                         <span>Upvote</span>
-                        <span class="vote-count">(42)</span>
+                        <span class="vote-count">(16)</span>
                     </button>
-                    <span style="opacity: 0.7;">Status: Emergency Priority</span>
+                    <span style="opacity: 0.7;">Status: Signage Design in Progress</span>
                 </div>
             </article>
 
             <article class="issue-card">
                 <div class="issue-header">
                     <div>
-                        <h3 class="issue-title">Cracked Sidewalk on Pine Avenue</h3>
+                        <h3 class="issue-title">Outdated Computer Lab at Branch Library</h3>
                         <div class="issue-meta">
-                            <span>📅 Reported 1 week ago</span>
-                            <span>👤 By Maria S.</span>
+                            <span>📅 Reported 6 days ago</span>
+                            <span>👤 By Tech Volunteer</span>
                         </div>
                     </div>
-                    <span class="priority-badge priority-low">Low</span>
+                    <div>
+                        <span class="priority-badge priority-low">Low</span>
+                        <span class="service-type">Libraries</span>
+                    </div>
                 </div>
                 <p class="issue-description">
-                    Several sections of the sidewalk on Pine Avenue have large cracks that could become trip hazards. While not immediately dangerous, they should be repaired before they worsen.
+                    The computer lab at the North Branch Library has 8-year-old computers running outdated software. This limits patrons' ability to access modern websites, complete online forms, and learn current technology skills.
                 </p>
-                <div class="issue-location">📍 Pine Avenue, Block 400-500</div>
+                <div class="issue-location">📍 North Branch Library, Computer Lab</div>
                 <div class="issue-actions">
                     <button class="upvote-btn" onclick="toggleUpvote(this)">
                         <span>👍</span>
                         <span>Upvote</span>
-                        <span class="vote-count">(9)</span>
+                        <span class="vote-count">(13)</span>
                     </button>
-                    <span style="opacity: 0.7;">Status: Planned Maintenance</span>
+                    <span style="opacity: 0.7;">Status: Technology Upgrade Budget Request</span>
                 </div>
             </article>
         </section>
@@ -668,31 +738,56 @@
     <div class="modal" id="complaintModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title">Report New Infrastructure Issue</h2>
+                <h2 class="modal-title">Report Civic Amenity Issue</h2>
                 <button class="close-btn" onclick="closeModal()">✕</button>
             </div>
             <form id="complaintForm">
                 <div class="form-group">
+                    <label for="serviceType">Facility/Service Type *</label>
+                    <select id="serviceType" name="serviceType" required>
+                        <option value="">Select facility or service type</option>
+                        <option value="library">Public Library</option>
+                        <option value="community-center">Community Center</option>
+                        <option value="senior-center">Senior Center</option>
+                        <option value="recreation-center">Recreation Center</option>
+                        <option value="public-building">Municipal/Government Building</option>
+                        <option value="accessibility">Accessibility Services</option>
+                        <option value="parking">Public Parking Facilities</option>
+                        <option value="other">Other Civic Amenity</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
                     <label for="issueTitle">Issue Title *</label>
-                    <input type="text" id="issueTitle" name="issueTitle" placeholder="Brief description of the issue" required>
+                    <input type="text" id="issueTitle" name="issueTitle" placeholder="Brief description of the civic amenity issue" required>
                 </div>
 
                 <div class="form-group">
                     <label for="issueDescription">Detailed Description *</label>
-                    <textarea id="issueDescription" name="issueDescription" rows="4" placeholder="Provide a detailed description of the infrastructure or road safety issue..." required></textarea>
+                    <textarea id="issueDescription" name="issueDescription" rows="4" placeholder="Provide a detailed description of the issue with the civic facility or service, including how it affects community members..." required></textarea>
                 </div>
 
                 <div class="form-group">
                     <label for="issueLocation">Location *</label>
-                    <input type="text" id="issueLocation" name="issueLocation" placeholder="Street address or intersection" required>
+                    <input type="text" id="issueLocation" name="issueLocation" placeholder="Facility name and address" required>
                 </div>
 
                 <div class="form-group">
                     <label for="issuePriority">Priority Level</label>
                     <select id="issuePriority" name="issuePriority">
-                        <option value="low">Low - Minor issue, not immediately dangerous</option>
-                        <option value="moderate">Moderate - Needs attention soon</option>
-                        <option value="urgent">Urgent - Safety hazard, needs immediate attention</option>
+                        <option value="low">Low - Minor inconvenience or improvement</option>
+                        <option value="moderate">Moderate - Affects service quality or accessibility</option>
+                        <option value="urgent">Urgent - Safety hazard or prevents access to services</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="accessibilityImpact">Accessibility Impact</label>
+                    <select id="accessibilityImpact" name="accessibilityImpact">
+                        <option value="none">No accessibility impact</option>
+                        <option value="minor">Minor - Affects some users with disabilities</option>
+                        <option value="major">Major - Prevents access for people with disabilities</option>
+                        <option value="complete">Complete barrier - Facility inaccessible</option>
                     </select>
                 </div>
 
@@ -700,7 +795,7 @@
                     <label for="issuePhotos">Upload Photos (Optional)</label>
                     <div class="file-upload" onclick="document.getElementById('issuePhotos').click()">
                         <input type="file" id="issuePhotos" name="issuePhotos" multiple accept="image/*">
-                        <div>📷 Click to upload photos of the issue</div>
+                        <div>📷 Click to upload photos of the facility issue</div>
                         <small style="opacity: 0.7;">Supports multiple images (JPG, PNG)</small>
                     </div>
                 </div>
@@ -715,14 +810,12 @@
                     <input type="email" id="reporterContact" name="reporterContact" placeholder="Email for updates on this issue">
                 </div>
 
-                <button type="submit" class="submit-btn">Submit Issue Report</button>
+                <button type="submit" class="submit-btn">Submit Civic Amenity Report</button>
             </form>
         </div>
     </div>
 
     <script>
-        const CATEGORY = 'infrastructure'; // Define the category for this page
-
         // Modal functionality
         function openModal() {
             document.getElementById('complaintModal').classList.add('active');
@@ -732,9 +825,6 @@
         function closeModal() {
             document.getElementById('complaintModal').classList.remove('active');
             document.body.style.overflow = 'auto';
-            document.getElementById('complaintForm').reset(); // Clear form on close
-            document.querySelector('.file-upload div').textContent = '📷 Click to upload photos of the issue';
-            document.querySelector('.file-upload small').textContent = 'Supports multiple images (JPG, PNG)';
         }
 
         // Close modal when clicking outside
@@ -745,35 +835,18 @@
         });
 
         // Upvote functionality
-        async function toggleUpvote(button, issueId) {
-            const userSession = JSON.parse(localStorage.getItem('userSession'));
-            if (!userSession || !userSession.token) {
-                alert('Please log in to upvote issues.');
-                window.location.href = 'login.html';
-                return;
-            }
-
-            try {
-                const response = await fetch(`/api/issues/${issueId}/vote`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${userSession.token}`
-                    }
-                });
-
-                const data = await response.json();
-                if (response.ok) {
-                    const voteCountSpan = button.querySelector('.vote-count');
-                    voteCountSpan.textContent = `(${data.votes})`;
-                    button.classList.add('voted'); // Assuming a successful vote means it's now voted
-                    button.querySelector('span:nth-child(2)').textContent = 'Voted';
-                } else {
-                    alert(data.message || 'Failed to upvote issue.');
-                }
-            } catch (error) {
-                console.error('Error upvoting issue:', error);
-                alert('Network error. Failed to upvote issue.');
+        function toggleUpvote(button) {
+            const voteCountSpan = button.querySelector('.vote-count');
+            const currentCount = parseInt(voteCountSpan.textContent.match(/\d+/)[0]);
+            
+            if (button.classList.contains('voted')) {
+                button.classList.remove('voted');
+                voteCountSpan.textContent = `(${currentCount - 1})`;
+                button.querySelector('span:nth-child(2)').textContent = 'Upvote';
+            } else {
+                button.classList.add('voted');
+                voteCountSpan.textContent = `(${currentCount + 1})`;
+                button.querySelector('span:nth-child(2)').textContent = 'Voted';
             }
         }
 
@@ -783,65 +856,37 @@
                 document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
                 this.classList.add('active');
                 
-                const filterType = this.textContent.trim().toLowerCase();
-                let queryParams = { category: CATEGORY };
-
-                if (filterType === 'urgent') queryParams.priority = 'urgent';
-                else if (filterType === 'moderate') queryParams.priority = 'moderate';
-                else if (filterType === 'low priority') queryParams.priority = 'low';
-                else if (filterType === 'resolved') queryParams.status = 'resolved';
-                else if (filterType === 'in progress') queryParams.status = 'in_progress';
-                else if (filterType === 'pending') queryParams.status = 'pending';
-                // 'All Issues' and 'Recent' (default sort) don't need specific priority/status filters
-
-                fetchAndDisplayIssues(queryParams);
+                // Here you would implement actual filtering logic
+                console.log('Filtering by:', this.textContent);
             });
         });
 
-        // Form submission for new issue
-        document.getElementById('complaintForm').addEventListener('submit', async function(e) {
+        // Form submission
+        document.getElementById('complaintForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const userSession = JSON.parse(localStorage.getItem('userSession'));
-            if (!userSession || !userSession.token) {
-                alert('Please log in to report issues.');
-                window.location.href = 'login.html';
-                return;
-            }
-
+            // Get form data
             const formData = new FormData(this);
             const issueData = {
+                serviceType: formData.get('serviceType'),
                 title: formData.get('issueTitle'),
                 description: formData.get('issueDescription'),
                 location: formData.get('issueLocation'),
                 priority: formData.get('issuePriority'),
-                category: CATEGORY, // Set category based on the page
-                images: [] // Placeholder for image URLs
+                accessibilityImpact: formData.get('accessibilityImpact'),
+                reporter: formData.get('reporterName'),
+                contact: formData.get('reporterContact')
             };
             
-            try {
-                const response = await fetch('/api/issues', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${userSession.token}`
-                    },
-                    body: JSON.stringify(issueData)
-                });
-
-                const data = await response.json();
-                if (response.ok) {
-                    alert('Thank you! Your issue has been reported successfully.');
-                    closeModal();
-                    fetchAndDisplayIssues({ category: CATEGORY }); // Refresh issues list
-                    fetchAndDisplayStats(); // Refresh stats
-                } else {
-                    alert(data.message || 'Failed to report issue.');
-                }
-            } catch (error) {
-                console.error('Error reporting issue:', error);
-                alert('Network error. Failed to report issue.');
-            }
+            // Simulate form submission
+            console.log('Submitting civic amenity issue:', issueData);
+            
+            // Show success message (in a real app, this would be handled by the backend)
+            alert('Thank you! Your civic amenity issue has been reported successfully. The relevant municipal department will be notified and you will receive updates via email if you provided contact information.');
+            
+            // Reset form and close modal
+            this.reset();
+            closeModal();
         });
 
         // File upload preview
@@ -870,118 +915,6 @@
                 }
             });
         });
-
-        // Fetch and display issues
-        async function fetchAndDisplayIssues(filters = { category: CATEGORY }) {
-            const issuesContainer = document.querySelector('.issues-container');
-            issuesContainer.innerHTML = ''; // Clear existing issues
-
-            const queryString = new URLSearchParams(filters).toString();
-
-            try {
-                const response = await fetch(`/api/issues?${queryString}`);
-                const issues = await response.json();
-
-                if (issues.length === 0) {
-                    issuesContainer.innerHTML = '<p style="text-align: center; opacity: 0.7;">No issues found for this category and filters.</p>';
-                    return;
-                }
-
-                issues.forEach(issue => {
-                    const issueCard = document.createElement('article');
-                    issueCard.className = 'issue-card';
-                    issueCard.innerHTML = `
-                        <div class="issue-header">
-                            <div>
-                                <h3 class="issue-title">${issue.title}</h3>
-                                <div class="issue-meta">
-                                    <span>📅 Reported ${new Date(issue.createdAt).toLocaleDateString()}</span>
-                                    <span>👤 By ${issue.reporter ? issue.reporter.username : 'Anonymous'}</span>
-                                </div>
-                            </div>
-                            <span class="priority-badge priority-${issue.priority}">${issue.priority}</span>
-                        </div>
-                        <p class="issue-description">${issue.description}</p>
-                        <div class="issue-location">📍 ${issue.location}</div>
-                        <div class="issue-actions">
-                            <button class="upvote-btn" onclick="toggleUpvote(this, '${issue._id}')">
-                                <span>👍</span>
-                                <span>Upvote</span>
-                                <span class="vote-count">(${issue.votes})</span>
-                            </button>
-                            <span style="opacity: 0.7;">Status: ${issue.status.replace('_', ' ')}</span>
-                        </div>
-                    `;
-                    issuesContainer.appendChild(issueCard);
-                });
-            } catch (error) {
-                console.error('Error fetching issues:', error);
-                issuesContainer.innerHTML = '<p style="text-align: center; color: red;">Failed to load issues. Please try again later.</p>';
-            }
-        }
-
-        // Fetch and display stats for this category
-        async function fetchAndDisplayStats() {
-            try {
-                const userSession = JSON.parse(localStorage.getItem('userSession'));
-                if (!userSession || !userSession.token) {
-                    console.warn('No user session or token found for fetching stats.');
-                    return;
-                }
-
-                const response = await fetch(`/api/admin/stats?category=${CATEGORY}`, {
-                    headers: {
-                        'Authorization': `Bearer ${userSession.token}`
-                    }
-                });
-                const stats = await response.json();
-
-                if (response.ok) {
-                    document.querySelector('.stats-bar .stat-item:nth-child(1) .stat-number').textContent = stats.totalIssues;
-                    document.querySelector('.stats-bar .stat-item:nth-child(2) .stat-number').textContent = stats.urgentIssues;
-                    document.querySelector('.stats-bar .stat-item:nth-child(3) .stat-number').textContent = stats.inProgressIssues || 0; // Assuming you might add this to backend
-                    document.querySelector('.stats-bar .stat-item:nth-child(4) .stat-number').textContent = stats.resolvedIssues;
-                } else {
-                    console.error('Failed to fetch stats:', stats.message);
-                }
-            } catch (error) {
-                console.error('Error fetching stats:', error);
-            }
-        }
-
-        // Initial load
-        document.addEventListener('DOMContentLoaded', function() {
-            fetchAndDisplayIssues();
-            fetchAndDisplayStats();
-
-            // Check if user came from home page and update navigation
-            if (sessionStorage.getItem('fromHomePage')) {
-                sessionStorage.removeItem('fromHomePage');
-                // Update nav links to include back to home
-                const navLinks = document.querySelector('.nav-links');
-                if (navLinks) {
-                    const homeLink = navLinks.querySelector('a[href="#home"]');
-                    if (homeLink) {
-                        homeLink.href = 'index.html';
-                        homeLink.textContent = '← Back to Home';
-                    }
-                }
-            }
-
-            // Check if user came from category page and update navigation
-            if (sessionStorage.getItem('fromCategoryPage')) {
-                sessionStorage.removeItem('fromCategoryPage');
-                // Update nav links to include back to category
-                const navLinks = document.querySelector('.nav-links');
-                if (navLinks) {
-                    const homeLink = navLinks.querySelector('a[href="#home"]');
-                    if (homeLink) {
-                        homeLink.href = sessionStorage.getItem('lastCategoryPage') || 'index.html';
-                        homeLink.textContent = '← Back to Category';
-                    }
-                }
-            }
-        });
     </script>
-</body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'993caea451619197',t:'MTc2MTM0MjU0Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
