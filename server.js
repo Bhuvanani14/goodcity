@@ -29,11 +29,9 @@ app.use(session({
 }));
 
 // MongoDB connection
-mongoose.connect(process.env.MONGODB_URI || 'mongodb+srv://user:user%40123@goodcity.bcwbooz.mongodb.net/goodcity', {
+mongoose.connect(process.env.MONGODB_URI || 'mongodb+srv://goodcity.bcwbooz.mongodb.net/?authSource=%24external&authMechanism=MONGODB-X509&appName=goodcity', {
     ssl: true,
     tlsAllowInvalidCertificates: true,
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
     serverSelectionTimeoutMS: 5000,
     socketTimeoutMS: 45000
 });
