@@ -29,9 +29,9 @@ app.use(session({
 }));
 
 // MongoDB connection
-mongoose.connect(process.env.MONGODB_URI || 'mongodb+srv://goodcity.bcwbooz.mongodb.net/?authSource=%24external&authMechanism=MONGODB-X509&appName=goodcity', {
-    ssl: true,
-    tlsAllowInvalidCertificates: true,
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/improve_my_city', {
+    ssl: process.env.NODE_ENV === 'production',
+    tlsAllowInvalidCertificates: process.env.NODE_ENV === 'production',
     serverSelectionTimeoutMS: 5000,
     socketTimeoutMS: 45000
 });

@@ -4,14 +4,16 @@ const GovernmentBody = require('./models/GovernmentBody');
 // Use environment variable for MongoDB URI, fallback to local for backward compatibility
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/improve_my_city';
 
-async function seedGovernmentBodies() {
-    try {
-mongoose.connect(MONGODB_URI, {
+const mongooseOptions = process.env.NODE_ENV === 'production' ? {
     ssl: true,
     tlsAllowInvalidCertificates: true,
     serverSelectionTimeoutMS: 5000,
     socketTimeoutMS: 45000
-});
+} : {};
+
+async function seedGovernmentBodies() {
+    try {
+        await mongoose.connect(MONGODB_URI, mongooseOptions);
         console.log('Connected to MongoDB for seeding government bodies.');
 
         // Clear existing government bodies
