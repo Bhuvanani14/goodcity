@@ -29,9 +29,15 @@ app.use(session({
 }));
 
 // MongoDB connection
-mongoose.connect(process.env.MONGODB_URI || 'mongodb+srv://user:user%40123@goodcity.bcwbooz.mongodb.net/goodcity', { ssl: true, tlsAllowInvalidCertificates: true,
+mongoose.connect(process.env.MONGODB_URI || 'mongodb+srv://user:user%40123@goodcity.bcwbooz.mongodb.net/goodcity', {
+    ssl: true,
+    tlsAllowInvalidCertificates: true,
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    serverSelectionTimeoutMS: 5000,
+    socketTimeoutMS: 45000,
+    bufferCommands: false,
+    bufferMaxEntries: 0
 });
 
 const db = mongoose.connection;
