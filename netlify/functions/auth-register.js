@@ -13,7 +13,13 @@ const userSchema = new mongoose.Schema({
     isActive: { type: Boolean, default: true }
 });
 
-const User = mongoose.model('User', userSchema);
+// Check if model already exists to avoid overwrite error
+let User;
+try {
+    User = mongoose.model('User');
+} catch (error) {
+    User = mongoose.model('User', userSchema);
+}
 
 exports.handler = async (event, context) => {
     // Handle CORS preflight

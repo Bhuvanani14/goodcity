@@ -328,6 +328,309 @@ For support or questions, please contact the development team or create an issue
 
 **Note**: This is a demo application with dummy credentials. In a production environment, implement proper user registration, password policies, and additional security measures.
 =======
-# goodcity
-Masai Hackathon
+# Good City - Civic Issue Reporting & Tracking Application
+
+A comprehensive web application for Indian citizens to report and track civic issues in their cities, with role-based access for both citizens and municipal administrators.
+
+## Features
+
+### 🏙️ Core Features
+- **Issue Reporting**: Indian citizens can report various civic issues with photos and location data
+- **Real-time Tracking**: Track issue status from submission to resolution by municipal authorities
+- **Role-based Access**: Separate interfaces for citizens and municipal administrators
+- **AI Chatbot**: Interactive assistant for issue guidance and status queries with India-specific responses
+- **Priority System**: Color-coded priority levels (low, moderate, urgent) based on Indian municipal standards
+- **Community Voting**: Citizens can upvote issues to increase visibility
+- **Analytics Dashboard**: Comprehensive insights for municipal administrators
+
+### 🔐 Authentication System
+- **User Login**: Indian citizens can log in to report and track issues
+- **Admin Login**: Municipal administrators have access to management dashboard
+- **Session Management**: Secure session handling with 24-hour expiration
+- **Role Verification**: Server-side role validation for protected routes
+
+### 📊 Admin Dashboard
+- **Issue Management**: View, filter, and update issue statuses across Indian cities
+- **Analytics**: Real-time statistics and performance metrics for municipal operations
+- **User Management**: Monitor active citizens and engagement levels
+- **Reporting**: Generate detailed reports for municipal stakeholders
+
+## Demo Credentials
+
+### Citizen Account
+- **Username**: `user`
+- **Password**: `user@123`
+
+### Admin Account
+- **Username**: `admin`
+- **Password**: `admin@123`
+
+## Tech Stack
+
+### Frontend
+- **HTML5**: Semantic markup and structure
+- **CSS3**: Modern styling with gradients and animations
+- **JavaScript**: Dynamic functionality and API integration
+- **Responsive Design**: Mobile-first approach
+
+### Backend
+- **Node.js**: Server runtime environment
+- **Express.js**: Web application framework (original)
+- **Netlify Functions**: Serverless backend for Netlify deployment
+- **Vercel Functions**: Serverless backend for Vercel deployment
+- **MongoDB**: NoSQL database for data storage
+- **JWT**: JSON Web Tokens for authentication
+- **bcryptjs**: Password hashing and security
+
+### Database
+- **MongoDB Atlas**: Cloud-hosted NoSQL database
+- **Connection String**: Configured via environment variables
+
+## Deployment Options
+
+### Option 1: Netlify Deployment (Recommended)
+
+#### Prerequisites
+- Netlify account
+- MongoDB Atlas cluster
+
+#### Steps
+1. **Fork/Clone Repository**
+   ```bash
+   git clone <repository-url>
+   cd good-city
+   ```
+
+2. **Install Dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Setup MongoDB Atlas**
+   - Create MongoDB Atlas account
+   - Create a cluster
+   - Get connection string
+   - Create database named `improve_my_city`
+
+4. **Deploy to Netlify**
+   - Go to [Netlify](https://netlify.com)
+   - Click "New site from Git"
+   - Connect your repository
+   - Configure build settings:
+     - Build command: (leave empty)
+     - Publish directory: `.`
+   - Add environment variables:
+     - `MONGODB_URI`: Your MongoDB Atlas connection string
+     - `JWT_SECRET`: A secure random string for JWT signing
+   - Click "Deploy site"
+
+5. **Seed Database** (Optional)
+   ```bash
+   node seed.js
+   ```
+
+#### Netlify Functions
+The application uses Netlify Functions located in `netlify/functions/`:
+- `auth-register.js` - User registration
+- `auth-login.js` - User authentication
+- `auth-logout.js` - User logout
+- `auth-me.js` - Get current user info
+- `issues-get.js` - Get all issues
+- `issues-post.js` - Create new issue
+- `issues-get-id.js` - Get specific issue
+- `issues-put-id.js` - Update issue
+- `issues-vote.js` - Vote on issue
+- `my-issues.js` - Get user's issues
+- `admin-stats.js` - Admin statistics
+
+### Option 2: Vercel Deployment
+
+#### Prerequisites
+- Vercel account
+- MongoDB Atlas cluster
+
+#### Steps
+1. **Fork/Clone Repository**
+   ```bash
+   git clone <repository-url>
+   cd good-city
+   ```
+
+2. **Install Dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Setup MongoDB Atlas**
+   - Create MongoDB Atlas account
+   - Create a cluster
+   - Get connection string
+   - Create database named `improve_my_city`
+
+4. **Deploy to Vercel**
+   - Go to [Vercel](https://vercel.com)
+   - Click "New Project"
+   - Import your repository
+   - Configure project:
+     - Framework Preset: Other
+     - Root Directory: `./`
+     - Build Command: (leave empty)
+     - Output Directory: `./`
+   - Add environment variables:
+     - `MONGODB_URI`: Your MongoDB Atlas connection string
+     - `JWT_SECRET`: A secure random string for JWT signing
+   - Click "Deploy"
+
+5. **Seed Database** (Optional)
+   ```bash
+   node seed.js
+   ```
+
+#### Vercel Functions
+The application uses Vercel Functions located in `api/`:
+- `api/auth/register.js` - User registration
+- `api/auth/login.js` - User authentication
+- `api/auth/logout.js` - User logout
+- `api/auth/me.js` - Get current user info
+- `api/issues/index.js` - Get all issues / Create issue
+- `api/issues/[id].js` - Get/Update specific issue
+- `api/issues/vote.js` - Vote on issue
+- `api/my-issues.js` - Get user's issues
+- `api/admin/stats.js` - Admin statistics
+
+## Environment Variables
+
+### Required for Both Platforms
+- `MONGODB_URI`: MongoDB Atlas connection string
+- `JWT_SECRET`: Secret key for JWT token signing (use a long random string)
+
+### Example
+```
+MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/improve_my_city?retryWrites=true&w=majority
+JWT_SECRET=your-super-secure-jwt-secret-key-here
+```
+
+## Local Development
+
+### Prerequisites
+- Node.js (v14 or higher)
+- MongoDB Atlas account (for cloud database)
+- npm or yarn package manager
+
+### Setup
+1. **Clone Repository**
+   ```bash
+   git clone <repository-url>
+   cd good-city
+   ```
+
+2. **Install Dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Environment Variables**
+   Create a `.env` file in the root directory:
+   ```
+   MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/improve_my_city?retryWrites=true&w=majority
+   JWT_SECRET=your-jwt-secret-key
+   ```
+
+4. **Run Locally**
+   ```bash
+   npm start
+   ```
+
+5. **Access Application**
+   - Open browser to `http://localhost:3000`
+   - Login with demo credentials
+
+## API Endpoints
+
+### Authentication
+- `POST /api/auth/register` - Register new user
+- `POST /api/auth/login` - User login
+- `POST /api/auth/logout` - User logout
+- `GET /api/auth/me` - Get current user info
+
+### Issues
+- `GET /api/issues` - Get all issues (with optional category filter)
+- `POST /api/issues` - Create new issue
+- `GET /api/issues/:id` - Get specific issue
+- `PUT /api/issues/:id` - Update issue (admin only)
+- `POST /api/issues/vote` - Vote on issue
+
+### User Issues
+- `GET /api/my-issues` - Get user's reported issues
+
+### Admin
+- `GET /api/admin/stats` - Get admin statistics
+
+## Usage Guide
+
+### For Citizens
+1. **Register/Login**: Create account or login with existing credentials
+2. **Report Issues**: Navigate to category pages to report specific issues
+3. **Track Progress**: Monitor your reported issues and their status
+4. **Vote**: Upvote important issues in your community
+5. **Chat**: Use the AI chatbot for guidance and status queries
+
+### For Administrators
+1. **Login**: Use admin credentials (`admin` / `admin@123`)
+2. **Dashboard**: Access comprehensive analytics and management tools
+3. **Issue Management**: Update issue statuses and assign resources
+4. **Analytics**: Monitor performance metrics and trends
+5. **Reporting**: Generate reports for stakeholders
+
+## Security Features
+
+- **Password Hashing**: All passwords are securely hashed using bcrypt
+- **JWT Tokens**: Secure token-based authentication
+- **Session Management**: Server-side session handling
+- **Role Validation**: Server-side role verification for all protected routes
+- **Input Validation**: Server-side validation for all user inputs
+
+## Development
+
+### Adding New Features
+1. Update the frontend HTML/CSS/JavaScript files
+2. Add corresponding API endpoints in serverless functions
+3. Update database schemas if needed
+4. Test authentication and authorization
+
+### Database Schema
+- **Database**: `improve_my_city`
+- **Users Collection**: username, password, role, email, timestamps
+- **Issues Collection**: title, description, category, priority, status, location, reporter, votes, timestamps
+
+## Troubleshooting
+
+### Common Issues
+1. **MongoDB Connection Error**: Ensure MongoDB Atlas connection string is correct
+2. **Port Already in Use**: Change the PORT in server.js or kill the process using port 3000
+3. **Authentication Issues**: Clear browser localStorage and try logging in again
+4. **CORS Errors**: Ensure the server is running and accessible
+
+### Debug Mode
+Enable debug logging by setting `NODE_ENV=development` in your environment.
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Support
+
+For support or questions, please contact the development team or create an issue in the repository.
+
+---
+
+**Note**: This is a demo application with dummy credentials. In a production environment, implement proper user registration, password policies, and additional security measures.
 >>>>>>> 05b26482d649b493d6fc6fc7d618148baa916211
