@@ -35,9 +35,7 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb+srv://user:user%40123@goodc
     useNewUrlParser: true,
     useUnifiedTopology: true,
     serverSelectionTimeoutMS: 5000,
-    socketTimeoutMS: 45000,
-    bufferCommands: false,
-    bufferMaxEntries: 0
+    socketTimeoutMS: 45000
 });
 
 const db = mongoose.connection;
