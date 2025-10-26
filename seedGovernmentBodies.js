@@ -6,10 +6,12 @@ const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/improv
 
 async function seedGovernmentBodies() {
     try {
-        await mongoose.connect(MONGODB_URI, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        });
+mongoose.connect(MONGODB_URI, {
+    ssl: true,
+    tlsAllowInvalidCertificates: true,
+    serverSelectionTimeoutMS: 5000,
+    socketTimeoutMS: 45000
+});
         console.log('Connected to MongoDB for seeding government bodies.');
 
         // Clear existing government bodies
