@@ -16,20 +16,20 @@ app.use(express.static('.'));
 
 // Session configuration
 app.use(session({
-    secret: 'good-city-secret-key',
+    secret: process.env.SESSION_SECRET || 'good-city-secret-key',
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({
-        mongoUrl: 'mongodb://localhost:27017/improve_my_city'
+        mongoUrl: process.env.MONGODB_URI || 'mongodb://localhost:27017/improve_my_city'
     }),
     cookie: {
-        secure: false,
+        secure: process.env.NODE_ENV === 'production',
         maxAge: 24 * 60 * 60 * 1000 // 24 hours
     }
 }));
 
 // MongoDB connection
-mongoose.connect('mongodb://localhost:27017/improve_my_city', {
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/improve_my_city', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
@@ -71,6 +71,9 @@ const issueSchema = new mongoose.Schema({
 const User = mongoose.model('User', userSchema);
 const Issue = mongoose.model('Issue', issueSchema);
 
+// Import Government Body model
+const GovernmentBody = require('./models/GovernmentBody');
+
 // Authentication middleware
 const authenticateToken = (req, res, next) => {
     const authHeader = req.headers['authorization'];
@@ -80,7 +83,7 @@ const authenticateToken = (req, res, next) => {
         return res.status(401).json({ message: 'Access token required' });
     }
 
-    jwt.verify(token, 'good-city-secret-key', (err, user) => {
+    jwt.verify(token, process.env.JWT_SECRET || 'good-city-secret-key', (err, user) => {
         if (err) {
             return res.status(403).json({ message: 'Invalid token' });
         }
@@ -196,7 +199,7 @@ app.post('/api/auth/login', async (req, res) => {
         // Generate token
         const token = jwt.sign(
             { username: user.username, role: user.role, id: user._id },
-            'good-city-secret-key',
+            process.env.JWT_SECRET || 'good-city-secret-key',
             { expiresIn: '24h' }
         );
 
@@ -366,6 +369,38 @@ app.get('/api/my-issues', authenticateToken, async (req, res) => {
     }
 });
 
+// Government Bodies routes
+app.get('/api/government-bodies', async (req, res) => {
+    try {
+        const { category, jurisdiction } = req.query;
+        const filter = {};
+
+        if (category) filter.category = category;
+        if (jurisdiction) filter.jurisdiction = jurisdiction;
+
+        const bodies = await GovernmentBody.find(filter)
+            .sort({ priority: -1, name: 1 });
+
+        res.json(bodies);
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching government bodies' });
+    }
+});
+
+app.get('/api/government-bodies/:id', async (req, res) => {
+    try {
+        const body = await GovernmentBody.findById(req.params.id);
+
+        if (!body) {
+            return res.status(404).json({ message: 'Government body not found' });
+        }
+
+        res.json(body);
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching government body' });
+    }
+});
+
 // Admin routes
 app.get('/api/admin/stats', authenticateToken, requireAdmin, async (req, res) => {
     try {
@@ -411,7 +446,7 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + '/login.html');
 });
 
-module.exports = { User, Issue };
+module.exports = { User, Issue, GovernmentBody };
 
 if (require.main === module) {
     app.listen(PORT, () => {

@@ -378,6 +378,8 @@
             }
         }
 
+
+
         /* Notification Styles */
         .notification {
             position: fixed;
@@ -914,6 +916,22 @@
                     }
                 }
             }
+
+            // Add chatbot functionality
+            const chatInput = document.querySelector('.chat-input');
+            chatInput.addEventListener('keydown', async function(e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    const userInput = this.value.trim();
+                    if (userInput) {
+                        // Generate and show response
+                        const response = await generateChatbotResponse(userInput);
+                        showChatbotResponse(response);
+                        // Clear input
+                        this.value = '';
+                    }
+                }
+            });
         });
 
         async function fetchAndDisplayStats() {
@@ -1040,27 +1058,139 @@
         }
 
 
-        function showChatbotResponse(response) {
+        // Function to fetch government bodies from API
+        async function fetchGovernmentBodies(category) {
+            try {
+                const response = await fetch(`/api/government-bodies?category=${category}`);
+                const bodies = await response.json();
+                return bodies;
+            } catch (error) {
+                console.error('Error fetching government bodies:', error);
+                return [];
+            }
+        }
+
+        // Function to identify issue category from description
+        function identifyCategory(description) {
+            const lowerDesc = description.toLowerCase();
+
+            // Keywords for each category
+            const keywords = {
+                infrastructure: ['road', 'pothole', 'street', 'traffic', 'signal', 'highway', 'bridge', 'construction', 'repair', 'maintenance'],
+                sanitation: ['garbage', 'waste', 'trash', 'clean', 'dirty', 'sewage', 'drain', 'toilet', 'sanitation', 'dump'],
+                utilities: ['water', 'electricity', 'power', 'light', 'gas', 'supply', 'cut', 'leak', 'meter', 'utility'],
+                environment: ['park', 'tree', 'garden', 'air', 'pollution', 'noise', 'green', 'space', 'environment', 'recycle'],
+                civic: ['facility', 'service', 'amenity', 'public', 'building', 'community', 'center', 'library', 'hospital', 'school'],
+                safety: ['crime', 'security', 'police', 'safety', 'accident', 'emergency', 'law', 'enforcement', 'theft', 'violence']
+            };
+
+            for (const [category, words] of Object.entries(keywords)) {
+                if (words.some(word => lowerDesc.includes(word))) {
+                    return category;
+                }
+            }
+
+            return null; // No category identified
+        }
+
+        // Function to generate chatbot response
+        async function generateChatbotResponse(userInput) {
+            const input = userInput.toLowerCase().trim();
+
+            // Check if asking about how to raise a concern
+            if (input.includes('how') && (input.includes('raise') || input.includes('report') || input.includes('concern') || input.includes('issue'))) {
+                return `To raise a concern in Good City:
+
+1. **Choose a Category**: Click on one of the category cards above that matches your issue
+2. **Fill the Form**: Provide detailed information about your concern
+3. **Add Location**: Include specific location details for faster resolution
+4. **Upload Evidence**: Add photos if available to support your report
+5. **Submit**: Your issue will be tracked and assigned to the appropriate authorities
+
+You can also describe your issue here, and I'll help identify the right category and responsible organizations.`;
+            }
+
+            // Try to identify category from description
+            const category = identifyCategory(userInput);
+            if (category) {
+                try {
+                    const govBodies = await fetchGovernmentBodies(category);
+                    if (govBodies && govBodies.length > 0) {
+                        const categoryTitles = {
+                            infrastructure: "Infrastructure & Road Safety",
+                            sanitation: "Sanitation & Waste Management",
+                            utilities: "Public Utilities",
+                            environment: "Environment & Public Spaces",
+                            civic: "Civic Amenities & Services",
+                            safety: "Safety & Law Enforcement"
+                        };
+                        const title = categoryTitles[category] || category;
+
+                        // Format government bodies properly
+                        const formattedBodies = govBodies.map(body => {
+                            return `• **${body.name}** (${body.jurisdiction} - ${body.priority})\n  Contact: ${body.contactInfo.phone || 'N/A'} | ${body.contactInfo.email || 'N/A'}`;
+                        }).join('\n\n');
+
+                        return `Based on your description, this appears to be an **${title}** issue.
+
+**Responsible Organizations:**
+${formattedBodies}
+
+**Next Steps:**
+1. Click the "${title}" category card above
+2. Fill out the detailed form with your specific location and issue description
+3. Your report will be forwarded to the appropriate authorities for resolution
+
+Would you like me to help you navigate to the correct category page?`;
+                    }
+                } catch (error) {
+                    console.error('Error fetching government bodies for response:', error);
+                }
+            }
+
+            // Default response for unrecognized queries
+            return `I can help you report civic issues and guide you on how to raise concerns effectively.
+
+**To get started:**
+• Describe your issue (e.g., "pothole on Main Street", "garbage not collected", "street light not working")
+• Or ask "how to raise a concern" for step-by-step guidance
+
+**Available Categories:**
+• 🛣️ Infrastructure & Road Safety
+• 🗑️ Sanitation & Waste Management
+• ⚡ Public Utilities
+• 🌳 Environment & Public Spaces
+• 🏛️ Civic Amenities & Services
+• 🚨 Safety & Law Enforcement
+
+Try describing your specific issue and I'll identify the right category and responsible organizations!`;
+        }
+
+        // Enhanced chatbot response function with government info
+        function showChatbotResponse(response, category = null) {
             const chatbotContainer = document.querySelector('.chatbot-container');
             const responseDiv = document.createElement('div');
             responseDiv.className = 'chatbot-response';
-            responseDiv.innerHTML = `
+
+            const responseHTML = `
                 <div class="response-content">
                     <div class="response-avatar">🤖</div>
                     <div class="response-text">${response}</div>
                 </div>
             `;
-            
+
+            responseDiv.innerHTML = responseHTML;
+
             chatbotContainer.appendChild(responseDiv);
-            
+
             // Scroll to response
             responseDiv.scrollIntoView({ behavior: 'smooth' });
-            
-            // Remove response after 10 seconds
+
+            // Remove response after 15 seconds (longer for detailed responses)
             setTimeout(() => {
                 responseDiv.remove();
                 chatInput.dataset.responded = '';
-            }, 10000);
+            }, 15000);
         }
 
         // Smooth scrolling for navigation links
